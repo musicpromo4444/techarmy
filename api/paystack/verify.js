@@ -26,11 +26,11 @@ export default async function handler(req, res) {
     if (payment.currency !== "NGN" || expectedKobo < 1 || Number(payment.amount) !== expectedKobo) {
       return res.status(400).json({ verified: false, error: "The paid amount does not match the selected classes. Please contact support." });
     }
-    const group_links = CLASS_GROUPS.filter(([name, url]) => classes.includes(name) && url).map(([name, url]) => ({ name, url }));
+    const group_links = CLASS_GROUPS.filter(([name, url]) => classes.includes(name) && url).map(([name, url]) => ({ name, url }));\n    const general_group_url = process.env.WHATSAPP_GROUP_GENERAL || "";
     const supabaseUrl = process.env.SUPABASE_URL;
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!supabaseUrl || !serviceKey) {
-      return res.status(503).json({ verified: true, reference, amount_naira: amountNaira, classes, group_links, warning: "Payment verified, but enrolment storage is not configured. Contact the academy administrator." });
+      return res.status(503).json({ verified: true, reference, amount_naira: amountNaira, classes, group_links, general_group_url, warning: "Payment verified, but enrolment storage is not configured. Contact the academy administrator." });
     }
     const row = {
       payment_reference: reference,
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
       body: JSON.stringify(row)
     });
     if (!saved.ok) return res.status(502).json({ verified: true, reference, amount_naira: amountNaira, classes, group_links, warning: "Payment verified, but saving enrolment failed. Please contact support with your payment reference." });
-    return res.status(200).json({ verified: true, reference, amount_naira: amountNaira, classes, group_links });
+    return res.status(200).json({ verified: true, reference, amount_naira: amountNaira, classes, group_links, general_group_url });
   } catch (error) {
     return res.status(500).json({ verified: false, error: "Could not verify this payment right now." });
   }
