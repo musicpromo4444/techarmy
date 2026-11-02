@@ -38,3 +38,46 @@
 @media(max-width:800px){.hero{padding:24px 5% 35px}.cinema-stage{height:clamp(350px,95vw,520px)}.hero-copy{margin-top:38px}.hero-copy .lead{max-width:620px}.flag-pole{height:54%}.warrior-silhouette{height:64%;bottom:9%}}
 @media(max-width:460px){.cinema-stage{height:390px}.cinema-title{top:7%}.cinema-title strong{font-size:49px}.blood-moon{top:35%;width:155px;height:155px}.warrior-silhouette{width:215px;height:63%;bottom:10%}.pole-left{left:7%}.pole-right{right:7%}.army-flag{width:60px;height:38px}.cinema-caption{font-size:8px}.hero-copy h1{font-size:58px}.hero-copy{margin-top:30px}}
 @media(prefers-reduced-motion:reduce){.blood-moon,.storm-smoke,.embers i,.army-flag,.warrior-silhouette,.warrior-sword,.sword-slash{animation:none!important}}
+
+/* Deeper cinematic battle motion: advancing ranks, cloak, dust and a full sword swing */
+.cinema-stage{background-color:#07080b;animation:cinemaImpact 4.5s ease-in-out infinite;perspective:900px}
+@keyframes cinemaImpact{0%,49%,75%,100%{transform:translate3d(0,0,0)}54%{transform:translate3d(-2px,1px,0)}57%{transform:translate3d(2px,-1px,0)}60%{transform:translate3d(0,0,0)}}
+.cinema-sky:before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(112deg,transparent 0 70px,#ffffff08 72px,transparent 75px);opacity:.35;animation:stormSweep 13s linear infinite}
+@keyframes stormSweep{to{transform:translateX(12%) translateY(4%)}}
+.battlefield-depth{position:absolute;z-index:2;left:0;right:0;display:flex;align-items:flex-end;justify-content:space-around;pointer-events:none}
+.battlefield-depth i{position:relative;display:block;width:clamp(18px,3vw,42px);height:78%;background:linear-gradient(90deg,#020305,#24252b 48%,#07080a);clip-path:polygon(50% 0,72% 22%,65% 40%,100% 100%,0 100%,35% 40%,28% 22%);filter:drop-shadow(0 0 6px #c20f17);animation:rankAdvance 5.8s ease-in-out infinite}
+.depth-far{height:39%;bottom:23%;opacity:.64;transform:scale(.85)}.depth-far i:nth-child(2n){animation-delay:-2s}.depth-mid{height:34%;bottom:8%;opacity:.88}.depth-mid i{width:clamp(24px,4vw,52px);animation-duration:4.6s}.depth-mid i:nth-child(odd){animation-delay:-1.4s}
+@keyframes rankAdvance{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.035)}}
+.battle-dust{position:absolute;z-index:5;bottom:0;width:80%;height:28%;border-radius:50%;background:radial-gradient(ellipse,#9a77734a 0%,#6d55552a 34%,transparent 72%);filter:blur(17px);pointer-events:none}
+.dust-one{left:-28%;animation:dustRoll 8s ease-in-out infinite alternate}.dust-two{right:-28%;bottom:4%;animation:dustRoll 10s ease-in-out infinite alternate-reverse}
+@keyframes dustRoll{to{transform:translateX(45%) translateY(-12px) scale(1.25);opacity:.45}}
+.battle-haze{position:absolute;z-index:6;inset:35% -30% 0;background:linear-gradient(180deg,transparent,#8a34301c 55%,#b3a09b16);filter:blur(15px);animation:hazeFlow 7s ease-in-out infinite alternate;pointer-events:none}
+@keyframes hazeFlow{to{transform:translateX(8%) translateY(-9%);opacity:.55}}
+.warrior-silhouette{z-index:7;transform:translateX(-50%);animation:warriorCharge 4.5s ease-in-out infinite}
+@keyframes warriorCharge{0%,45%,100%{transform:translateX(-50%) translateY(0) scale(1)}52%,65%{transform:translateX(-50%) translateY(-10px) scale(1.025)}}
+.warrior-hood{filter:drop-shadow(0 0 7px #4b4d55);background:linear-gradient(105deg,#020305 5%,#303138 44%,#090a0d 75%,#020305)}
+.warrior-body:before{content:"";position:absolute;left:28%;right:28%;top:0;height:100%;background:linear-gradient(90deg,transparent,#9b9da522,transparent);transform:skewX(-15deg)}
+.warrior-cloak{position:absolute;z-index:-1;left:3%;top:34%;width:94%;height:65%;background:linear-gradient(100deg,#050608,#24252a 45%,#030405);clip-path:polygon(38% 0,63% 0,100% 100%,72% 83%,50% 100%,24% 84%,0 100%);transform-origin:50% 0;animation:cloakInWind 1.8s ease-in-out infinite alternate}
+@keyframes cloakInWind{to{transform:skewX(-7deg) translateX(-5px);filter:brightness(1.2)}}
+.warrior-arm{z-index:3;transform-origin:14% 50%;animation:armSwing 4.5s cubic-bezier(.45,0,.25,1) infinite}
+.warrior-sword{z-index:4;transform-origin:0 50%;animation:swordStrike 4.5s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes armSwing{0%,43%,100%{transform:rotate(-24deg)}51%{transform:rotate(-53deg)}58%{transform:rotate(5deg)}68%{transform:rotate(-24deg)}}
+@keyframes swordStrike{0%,43%,100%{transform:rotate(-24deg) translateX(0)}50%{transform:rotate(-67deg) translateX(-4px)}58%{transform:rotate(17deg) translateX(16px)}68%{transform:rotate(-24deg) translateX(0)}}
+.warrior-sword:after{content:"";position:absolute;inset:-4px 0;background:linear-gradient(90deg,transparent,#ffffffa8 40%,#fff 52%,transparent);filter:blur(3px);opacity:.6}
+.lead-soldier{position:absolute;z-index:6;bottom:12%;width:clamp(54px,10vw,120px);height:40%;filter:drop-shadow(0 0 9px #000);animation:flankAdvance 4.5s ease-in-out infinite}
+.soldier-left{left:12%;transform:scale(.72);animation-delay:-1s}.soldier-right{right:12%;transform:scale(.72) scaleX(-1);animation-delay:-.6s}
+.lead-soldier:before{content:"";position:absolute;left:29%;top:0;width:42%;height:34%;background:linear-gradient(110deg,#030405,#292a30,#050608);clip-path:polygon(50% 0,100% 42%,82% 100%,18% 100%,0 42%)}
+.lead-soldier i{position:absolute;left:12%;right:12%;top:30%;bottom:0;background:linear-gradient(90deg,#020305,#24252a 50%,#020305);clip-path:polygon(30% 0,70% 0,100% 100%,0 100%)}
+.lead-soldier b{position:absolute;right:0;top:34%;width:60%;height:4px;background:linear-gradient(90deg,#aaa,#fff,#e21e22);transform:rotate(-38deg);box-shadow:0 0 8px #ff251e;transform-origin:left}
+@keyframes flankAdvance{0%,100%{translate:0 0}50%{translate:0 -13px}}
+.charging-line{position:absolute;z-index:5;bottom:4%;left:0;right:0;height:28%;display:flex;justify-content:space-evenly;align-items:flex-end;opacity:.68;pointer-events:none}
+.charging-line i{width:clamp(12px,2vw,25px);height:85%;background:linear-gradient(90deg,#020305,#303138,#020305);clip-path:polygon(50% 0,76% 20%,68% 42%,100% 100%,0 100%,32% 42%,24% 20%);animation:troopRush 3.8s ease-in-out infinite}
+.charging-line i:nth-child(2n){height:60%;animation-delay:-1.2s}.charging-line i:nth-child(3n){animation-delay:-2.3s}
+@keyframes troopRush{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.army-flag{animation:flagWave 1.55s ease-in-out infinite alternate;filter:drop-shadow(0 0 8px #e21b1b70)}
+.army-flag:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#ffffff22,transparent 30%,#0005 75%,#ffffff1a);animation:flagLight 2s ease-in-out infinite alternate}
+@keyframes flagLight{to{transform:translateX(10%);opacity:.35}}
+.sword-slash{top:52%;height:5px;animation:slashFlash 4.5s cubic-bezier(.3,.7,.2,1) infinite}
+.sword-slash:after{content:"";position:absolute;inset:-10px 0;background:linear-gradient(90deg,transparent,#ff332b66,transparent);filter:blur(9px)}
+@media(max-width:460px){.lead-soldier.soldier-left{left:2%}.lead-soldier.soldier-right{right:2%}.warrior-silhouette{z-index:7}.battlefield-depth{opacity:.7}}
+@media(prefers-reduced-motion:reduce){.cinema-stage,.cinema-sky:before,.battlefield-depth i,.battle-dust,.battle-haze,.warrior-cloak,.warrior-arm,.warrior-sword,.lead-soldier,.charging-line i{animation:none!important}}
