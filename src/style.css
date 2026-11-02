@@ -107,3 +107,18 @@
 .payment-steps small{font-size:10px;color:#858187;line-height:1.7}
 .bottom-back{margin-top:28px}
 @media(max-width:760px){.course-page{padding:18px 5% 45px}.course-top>span{font-size:8px;text-align:right}.course-hero{padding:52px 0 38px}.course-detail-grid,.course-bottom{grid-template-columns:1fr}.course-bottom{gap:20px}.course-panel{padding:23px}.course-hero h1{font-size:clamp(55px,13vw,82px)}.course-actions{align-items:flex-start;flex-direction:column}}
+
+/* Multi-course checkout */
+.class-picker{border:1px solid #63302d;background:#111216;padding:18px;margin:8px 0 4px}
+.class-picker>label{display:block;font:11px 'DM Mono';letter-spacing:1.3px;color:#f13a30;margin-bottom:8px}
+.class-picker>small{display:block;color:#999;font-size:11px;line-height:1.6;margin-bottom:14px}
+.class-option{display:flex!important;align-items:center;gap:12px;padding:13px 10px;margin:0!important;border-top:1px solid #ffffff17;font:600 12px Manrope!important;letter-spacing:0!important;color:#eee!important;cursor:pointer}
+.class-option input{width:17px;height:17px;accent-color:#f13a30;flex:0 0 auto}
+.class-option span{flex:1}.class-option b{font:500 13px 'DM Mono';color:#fff}
+.checkout-total{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f13a30;padding-top:16px;margin-top:8px;font:11px 'DM Mono';letter-spacing:1px}
+.checkout-total strong{font:800 25px 'Barlow Condensed';color:#ff5147}
+.payment-error{padding:12px;border:1px solid #f13a30;background:#f13a3018;color:#ff9b92;font-size:12px}
+.primary:disabled{opacity:.55;cursor:wait;transform:none}
+.verified-summary{display:grid;gap:8px;padding:15px;border:1px solid #f13a30;margin:18px 0;color:#eee}
+.verified-summary b{font:700 19px 'Barlow Condensed';color:#ff5147}
+.verified-summary span{font-size:12px;color:#aaa}
