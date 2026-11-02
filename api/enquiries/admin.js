@@ -1,5 +1,5 @@
 const STATUSES = new Set(["pending", "contacted", "enrolled", "closed"]);
-function authorized(req) { const token = String(req.headers.authorization || "").replace(/^Bearer\\s+/i, ""); return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY); }
+function authorized(req) { const token = String(req.headers.authorization || "").replace(/^Bearer\s+/i, ""); return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY); }
 export default async function handler(req, res) {
   if (!authorized(req)) return res.status(401).json({ error: "Admin access required." });
   const url = process.env.SUPABASE_URL; const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
