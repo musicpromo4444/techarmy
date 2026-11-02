@@ -22,6 +22,10 @@ export default async function handler(req, res) {
     const metadata = payment.metadata || {};
     const classes = Array.isArray(metadata.classes) ? metadata.classes : String(metadata.classes || "").split(",").map(x => x.trim()).filter(Boolean);
     const amountNaira = Number(payment.amount) / 100;
+    const expectedKobo = classes.reduce((sum, item) => sum + ({ "AI & Automation": 500000, "Websites & Applications": 1500000, "AI Creative Studio": 3000000 }[item] || 0), 0);
+    if (payment.currency !== "NGN" || expectedKobo < 1 || Number(payment.amount) !== expectedKobo) {
+      return res.status(400).json({ verified: false, error: "The paid amount does not match the selected classes. Please contact support." });
+    }
     const group_links = CLASS_GROUPS.filter(([name, url]) => classes.includes(name) && url).map(([name, url]) => ({ name, url }));
     const supabaseUrl = process.env.SUPABASE_URL;
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -38,7 +42,7 @@ export default async function handler(req, res) {
       amount_kobo: Number(payment.amount),
       currency: payment.currency || "NGN",
       payment_status: "success",
-      batch_month: process.env.NEXT_BATCH_MONTH || null
+      batch_month: process.env.NEXT_BATCH_MONTH || (() => { const now = new Date(); const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)); return next.toISOString().slice(0, 7); })()
     };
     const saved = await fetch(supabaseUrl.replace(/\/$/, "") + "/rest/v1/tech_army_registrations?on_conflict=payment_reference", {
       method: "POST",
