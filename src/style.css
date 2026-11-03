@@ -158,3 +158,50 @@
 .enquiry-card textarea{min-height:70px;resize:vertical}
 .save-note{margin-top:8px;cursor:pointer}
 @media(max-width:650px){.registration-choice{grid-template-columns:1fr}.admin-shell{padding:22px 5%}.enquiry-list{grid-template-columns:1fr}.admin-toolbar{align-items:stretch}.admin-toolbar>div{width:100%}}
+
+/* Manual bank-transfer checkout */
+.registration-choice{grid-template-columns:repeat(3,minmax(0,1fr))}
+.manual-overview{margin-top:14px;padding:17px;border:1px solid #74302d;background:linear-gradient(145deg,#171014,#0c0d10);color:#ddd}
+.manual-overview ol{padding-left:20px;margin:13px 0;display:grid;gap:10px;font-size:12px;line-height:1.65}
+.manual-overview li::marker{color:#ff665c;font-weight:800}
+.manual-overview p{font-size:11px;line-height:1.7;color:#aaa;margin:0}
+.manual-payment-backdrop{z-index:120;overflow:auto;align-items:flex-start;padding:24px 14px}
+.manual-payment-panel{width:min(100%,590px);max-height:none;overflow:visible;background:#0e0f12;border:1px solid #7e302c;box-shadow:0 25px 90px #000d,0 0 35px #ef30252a;padding:clamp(22px,5vw,38px);position:relative}
+.manual-payment-panel h2{font:900 clamp(42px,9vw,65px)/.9 'Barlow Condensed';letter-spacing:-1px;margin:15px 0}
+.manual-payment-panel h2 em{color:#f13a30;font-style:normal}
+.manual-intro{font-size:13px;line-height:1.7;color:#bbb}
+.manual-reference{display:grid;gap:7px;padding:13px;background:#17181c;border:1px solid #353238;margin:18px 0}
+.manual-reference span,.manual-bank-card small,.manual-amount span,.manual-timer-box span{font:9px 'DM Mono';letter-spacing:1.2px;color:#aaa}
+.manual-reference b{font:12px 'DM Mono';color:#ff837b;overflow-wrap:anywhere}
+.manual-bank-card{padding:18px;border:1px solid #4a3737;background:linear-gradient(145deg,#171519,#0a0b0d);display:grid;gap:15px}
+.manual-bank-card>div:not(.eyebrow){display:grid;gap:5px}
+.manual-bank-card b{font-size:15px;color:#fff;overflow-wrap:anywhere}
+.manual-bank-card .account-number{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.copy-account{padding:10px 13px;background:#2a1717;border:1px solid #f13a30;color:#ff918a;font:10px 'DM Mono'}
+.manual-amount{padding-top:12px;border-top:1px solid #393238;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.manual-amount strong{font:900 25px 'Barlow Condensed';color:#ff746b}
+.manual-student-summary{display:grid;gap:5px;padding:14px 0;color:#eee}
+.manual-student-summary span{font-size:11px;color:#999}
+.manual-timer-box{display:flex;gap:15px;align-items:center;padding:16px;border:1px solid #80531e;background:#211a10;margin:10px 0 16px}
+.manual-timer-box>div{min-width:100px;display:grid;gap:6px}
+.manual-timer-box strong{font:900 35px 'DM Mono';color:#ffd27a}
+.manual-timer-box p{font-size:11px;line-height:1.65;color:#d1c3ad;margin:0}
+.manual-whatsapp{display:flex!important;align-items:center;justify-content:center;gap:9px;text-decoration:none}
+.manual-note{font-size:10px;line-height:1.7;color:#888;margin-top:14px}
+.manual-refresh{width:100%;padding:12px;margin:0 0 10px;background:#181a1d;border:1px solid #68636a;color:#eee;font-size:10px;letter-spacing:.7px}
+.manual-approved{padding:17px;border:1px solid #34784a;background:#102319;color:#9de3b0;display:grid;gap:12px;font-size:12px}
+.manual-approved a{text-decoration:none}
+.admin-settings{max-width:720px;background:#121216;border:1px solid #343238;padding:24px;display:grid;gap:14px}
+.admin-settings h2{font:800 30px 'Barlow Condensed';margin:0}
+.admin-settings p{font-size:12px;line-height:1.7;color:#aaa}
+.admin-settings label{display:grid;gap:7px;font-size:11px;color:#bbb}
+.admin-settings input{width:100%;background:#090a0d;border:1px solid #494047;color:#fff;padding:13px;font:13px Manrope}
+.settings-subhead{margin-top:15px}
+.admin-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 20px}
+.admin-summary>div{padding:16px;background:#151519;border:1px solid #343238;display:grid;gap:5px}
+.admin-summary b{font:900 26px 'Barlow Condensed';color:#ff8279}
+.admin-summary span{font-size:10px;color:#aaa}
+.status.expired{color:#ffc36e;border-color:#8b5c26}
+.approve-payment,.reject-payment{display:flex;align-items:center;gap:6px;padding:10px 12px;border:1px solid #3f8055;background:#14251b;color:#a2e6b2;font-size:10px}
+.reject-payment{border-color:#813c3c;background:#291414;color:#ff9993}
+@media(max-width:650px){.registration-choice{grid-template-columns:1fr}.manual-timer-box{align-items:flex-start;flex-direction:column}.manual-bank-card .account-number{align-items:flex-start}.admin-summary{grid-template-columns:1fr 1fr}}
