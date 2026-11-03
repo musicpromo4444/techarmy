@@ -1,7 +1,7 @@
 const PRICES = {
-  "AI & Automation": 500000,
-  "Websites & Applications": 1500000,
-  "AI Creative Studio": 3000000,
+  "Starter": 500000,
+  "Professional": 1500000,
+  "Master Class": 3000000,
 };
 
 export default async function handler(req, res) {
