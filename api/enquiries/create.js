@@ -1,4 +1,4 @@
-const ALLOWED = new Set(["AI & Automation", "Websites & Applications", "AI Creative Studio"]);
+const ALLOWED = new Set(["Starter", "Professional", "Master Class"]);
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   const url = process.env.SUPABASE_URL;
