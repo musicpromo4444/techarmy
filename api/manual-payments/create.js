@@ -21,6 +21,6 @@ export default async function handler(req, res) {
     const created = await fetch(base + "/rest/v1/tech_army_manual_payments", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(payload) });
     const rows = await created.json();
     if (!created.ok || !rows?.[0]) return res.status(502).json({ error: "We could not save your registration. Please try again." });
-    return res.status(201).json({ payment: { ...rows[0], bank_account: { bank_name: settings.bank_name, account_name: settings.account_name, account_number: settings.account_number }, admin_whatsapp: settings.admin_whatsapp || "2347017036508" } });
+    return res.status(201).json({ payment: { ...rows[0], bank_account: { bank_name: settings.bank_name, account_name: settings.account_name, account_number: settings.account_number }, admin_whatsapp: settings.admin_whatsapp || "2347017036508", general_group_url: settings.general_group_url || null } });
   } catch { return res.status(500).json({ error: "Unable to prepare your bank transfer right now." }); }
 }
