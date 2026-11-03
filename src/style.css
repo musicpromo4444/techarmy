@@ -253,3 +253,14 @@
 .training-card p{font-size:13px;line-height:1.65;color:#aaa;max-width:340px;margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
 .training-card .card-register{bottom:22px;left:25px;right:25px;width:calc(100% - 50px);min-height:50px}
 @media(max-width:760px){.training-card{min-height:315px;padding:23px 22px 88px}.training-card .card-icon{margin:27px 0 16px}.training-card p{font-size:13px;line-height:1.65;-webkit-line-clamp:3}.training-card .card-register{left:22px;right:22px;width:calc(100% - 44px);bottom:20px}}
+
+/* Training cards: short previews, readable copy, CTA never covers text */
+.training-grid{align-items:stretch}
+.training-card{min-height:0;height:100%;display:flex;flex-direction:column;align-items:flex-start;padding:25px 23px 23px;cursor:pointer;overflow:hidden}
+.training-card .card-index{min-height:14px}
+.training-card .card-icon{margin:25px 0 17px;flex-shrink:0}
+.training-card h3{margin:0 0 10px;line-height:1.05}
+.training-card p{font-size:12px;line-height:1.7;color:#aaa;max-width:100%;margin:0 0 22px;min-height:0}
+.training-card .card-register{position:relative;left:auto;right:auto;bottom:auto;width:100%;min-height:48px;margin-top:auto;flex-shrink:0}
+.training-card[role="button"]:focus-visible{outline:2px solid #ff5147;outline-offset:4px}
+@media(max-width:800px){.training-grid{grid-template-columns:1fr;gap:14px}.training-card{min-height:0;padding:24px}.training-card .card-icon{margin:23px 0 15px}.training-card p{max-width:100%;font-size:13px;line-height:1.7;margin-bottom:20px}.training-card .card-register{position:relative;left:auto;right:auto;bottom:auto;width:100%;margin-top:0}}
