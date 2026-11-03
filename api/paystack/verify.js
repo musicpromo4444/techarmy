@@ -12,6 +12,7 @@ export default async function handler(req,res){
   if(!response.ok||!result.status||result.data?.status!=="success")return res.status(402).json({verified:false,error:"Payment has not been confirmed by Paystack."});
   const payment=result.data,metadata=payment.metadata||{};
   const classes=[...new Set(Array.isArray(metadata.classes)?metadata.classes:String(metadata.classes||"").split(",").map(x=>x.trim()).filter(Boolean))];
+  if(classes.length<1||classes.length>2)return res.status(400).json({verified:false,error:"Invalid package selection."});
   const expectedKobo=classes.reduce((sum,item)=>sum+(PRICES[item]||0),0);
   if(payment.reference!==reference||payment.currency!=="NGN"||expectedKobo<1||Number(payment.amount)!==expectedKobo)return res.status(400).json({verified:false,error:"The paid amount does not match the selected package. Please contact support."});
   const amountNaira=Number(payment.amount)/100;
