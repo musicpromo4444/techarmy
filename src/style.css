@@ -205,3 +205,15 @@
 .approve-payment,.reject-payment{display:flex;align-items:center;gap:6px;padding:10px 12px;border:1px solid #3f8055;background:#14251b;color:#a2e6b2;font-size:10px}
 .reject-payment{border-color:#813c3c;background:#291414;color:#ff9993}
 @media(max-width:650px){.registration-choice{grid-template-columns:1fr}.manual-timer-box{align-items:flex-start;flex-direction:column}.manual-bank-card .account-number{align-items:flex-start}.admin-summary{grid-template-columns:1fr 1fr}}
+
+/* International WhatsApp number field */
+.international-phone{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:10px}
+.international-phone>label{min-width:0;display:grid;gap:8px;font:9px 'DM Mono';letter-spacing:1px;color:#aaa}
+.international-phone select,.international-phone input{width:100%;min-width:0;background:#090a0d;border:1px solid #37383d;color:#eee;padding:13px 11px;font:12px Manrope;outline:none;border-radius:0}
+.international-phone select:focus,.international-phone input:focus{border-color:var(--red)}
+.phone-number-entry{display:flex;align-items:center;min-width:0;background:#090a0d;border:1px solid #37383d}
+.phone-number-entry:focus-within{border-color:var(--red)}
+.phone-number-entry>b{flex-shrink:0;padding:0 0 0 12px;color:#ff766e;font:700 13px 'DM Mono'}
+.phone-number-entry input{border:0;padding-left:9px}
+.phone-number-entry input:focus{border:0}
+@media(max-width:460px){.international-phone{grid-template-columns:1fr}.international-phone select,.international-phone input{font-size:13px}}
