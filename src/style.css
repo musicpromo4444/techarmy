@@ -244,3 +244,12 @@
 @keyframes slashFlash{0%,34%,74%,100%{opacity:0;transform:translateX(-30%) rotate(-18deg)}42%{opacity:1}55%{opacity:0;transform:translateX(35%) rotate(-18deg)}}
 @media(max-width:800px){.cinema-stage{width:100%;aspect-ratio:4/5;min-height:360px;max-height:520px;margin-bottom:28px}.hero-copy{margin:0 auto}.hero-copy .hero-actions{margin-top:20px}.hero-copy h1{font-size:clamp(54px,13vw,84px)}}
 @media(max-width:460px){.cinema-stage{aspect-ratio:4/5;height:auto;min-height:0}.warrior-silhouette{width:clamp(190px,58vw,280px);height:66%;bottom:8%}.hero-copy .lead{font-size:13px;padding:0 5px}.hero-copy h1{margin-top:14px}.hero-copy .hero-stats{margin-top:32px}}
+
+/* Training cards: concise previews, readable copy and clear detail action */
+.training-grid{align-items:stretch}
+.training-card{min-height:340px;padding:25px 25px 92px;display:flex;flex-direction:column;align-items:flex-start}
+.training-card .card-icon{margin:30px 0 17px;flex:0 0 auto}
+.training-card h3{margin:0 0 10px;line-height:1.08}
+.training-card p{font-size:13px;line-height:1.65;color:#aaa;max-width:340px;margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.training-card .card-register{bottom:22px;left:25px;right:25px;width:calc(100% - 50px);min-height:50px}
+@media(max-width:760px){.training-card{min-height:315px;padding:23px 22px 88px}.training-card .card-icon{margin:27px 0 16px}.training-card p{font-size:13px;line-height:1.65;-webkit-line-clamp:3}.training-card .card-register{left:22px;right:22px;width:calc(100% - 44px);bottom:20px}}
