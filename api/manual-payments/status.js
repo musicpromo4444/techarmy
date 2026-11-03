@@ -15,6 +15,6 @@ export default async function handler(req, res) {
     const p = rows[0], s = ss?.[0] || {}, groupLinks = [];
     const map = { "Starter": s.starter_group_url, "Professional": s.professional_group_url, "Master Class": s.master_group_url };
     if (p.status === "approved") for (const name of p.classes || []) if (map[name]) groupLinks.push({ name, url: map[name] });
-    return res.status(200).json({ payment: { ...p, bank_account: { bank_name: s.bank_name, account_name: s.account_name, account_number: s.account_number }, admin_whatsapp: s.admin_whatsapp || "2347017036508", group_links: groupLinks } });
+    return res.status(200).json({ payment: { ...p, bank_account: { bank_name: s.bank_name, account_name: s.account_name, account_number: s.account_number }, admin_whatsapp: s.admin_whatsapp || "2347017036508", general_group_url: s.general_group_url || null, group_links: groupLinks } });
   } catch { return res.status(500).json({ error: "Could not retrieve your registration." }); }
 }
