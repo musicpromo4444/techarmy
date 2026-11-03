@@ -1,19 +1,22 @@
 const STATUSES = new Set(["approved", "rejected"]);
-function authorized(req) { const token = String(req.headers.authorization || "").replace(/^Bearer\s+/i, ""); return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY); }
+function authorized(req) { const token = String(req.headers.authorization || "").replace(/^Bearer\\s+/i, ""); return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY); }
 export default async function handler(req, res) {
   if (!authorized(req)) return res.status(401).json({ error: "Admin access required." });
   const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return res.status(503).json({ error: "Database is not configured." });
-  const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
+  if (!url || !key) return res.status(503).json({ error: "Database is not configured. Add SUPABASE_SERVICE_ROLE_KEY in Vercel." });
+  const base = url.replace(/\\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
   try {
     if (req.method === "GET") {
-      const [pr, sr] = await Promise.all([
-        fetch(base + "/rest/v1/tech_army_manual_payments?select=*&order=created_at.desc&limit=500", { headers }),
-        fetch(base + "/rest/v1/tech_army_payment_settings?id=eq.default&select=*", { headers })
-      ]);
-      const [payments, settings] = await Promise.all([pr.json(), sr.json()]);
-      if (!pr.ok || !sr.ok) return res.status(502).json({ error: "Could not load payment records or settings." });
-      return res.status(200).json({ payments, settings: settings?.[0] || {} });
+      const paths = [
+        "/rest/v1/tech_army_manual_payments?select=*&order=created_at.desc&limit=500",
+        "/rest/v1/tech_army_payment_settings?id=eq.default&select=*",
+        "/rest/v1/tech_army_registrations?select=*&order=created_at.desc&limit=500",
+        "/rest/v1/tech_army_enquiries?select=*&order=created_at.desc&limit=500"
+      ];
+      const responses = await Promise.all(paths.map(p => fetch(base + p, { headers })));
+      const data = await Promise.all(responses.map(r => r.json()));
+      if (responses.some(r => !r.ok)) return res.status(502).json({ error: "Could not load all dashboard records. Check the Tech Army tables and service key." });
+      return res.status(200).json({ payments: data[0], settings: data[1]?.[0] || {}, registrations: data[2], enquiries: data[3] });
     }
     if (req.method === "PATCH") {
       const { id, status, admin_notes } = req.body || {};
@@ -28,13 +31,15 @@ export default async function handler(req, res) {
     if (req.method === "PUT") {
       const b = req.body || {}, required = ["bank_name", "account_name", "account_number", "admin_whatsapp"];
       if (required.some(k => typeof b[k] !== "string" || !b[k].trim())) return res.status(400).json({ error: "Bank name, account name, account number and admin WhatsApp are required." });
-      if (!/^\d{10}$/.test(b.account_number.replace(/\s/g, ""))) return res.status(400).json({ error: "Enter a valid 10-digit bank account number." });
-      const payload = { id: "default", bank_name: b.bank_name.trim(), account_name: b.account_name.trim(), account_number: b.account_number.replace(/\s/g, ""), admin_whatsapp: b.admin_whatsapp.replace(/\D/g, ""), general_group_url: b.general_group_url || null, starter_group_url: b.starter_group_url || null, professional_group_url: b.professional_group_url || null, master_group_url: b.master_group_url || null, updated_at: new Date().toISOString() };
+      if (!/^\\d{10}$/.test(b.account_number.replace(/\\s/g, ""))) return res.status(400).json({ error: "Enter a valid 10-digit bank account number." });
+      const urls = ["general_group_url","starter_group_url","professional_group_url","master_group_url"];
+      for (const k of urls) if (b[k] && (!/^https:\\/\\/(chat\\.whatsapp\\.com|wa\\.me)\\//i.test(b[k]))) return res.status(400).json({ error: "Enter a valid WhatsApp invitation URL." });
+      const payload = { id: "default", bank_name: b.bank_name.trim(), account_name: b.account_name.trim(), account_number: b.account_number.replace(/\\s/g, ""), admin_whatsapp: b.admin_whatsapp.replace(/\\D/g, ""), general_group_url: b.general_group_url || null, starter_group_url: b.starter_group_url || null, professional_group_url: b.professional_group_url || null, master_group_url: b.master_group_url || null, updated_at: new Date().toISOString() };
       const r = await fetch(base + "/rest/v1/tech_army_payment_settings?on_conflict=id", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(payload) });
       const rows = await r.json();
       if (!r.ok) return res.status(502).json({ error: "Could not save payment settings." });
       return res.status(200).json({ settings: rows?.[0] || payload });
     }
     return res.status(405).json({ error: "Method not allowed" });
-  } catch { return res.status(500).json({ error: "Manual payment admin request failed." }); }
+  } catch { return res.status(500).json({ error: "Admin dashboard request failed." }); }
 }
