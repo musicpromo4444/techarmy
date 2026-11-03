@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Please complete your details and select at least one class." });
     }
     const unique = [...new Set(classes)];
-    if (unique.some((item) => !Object.prototype.hasOwnProperty.call(PRICES, item))) {
+    if (unique.length > 2 || unique.some((item) => !Object.prototype.hasOwnProperty.call(PRICES, item))) {
       return res.status(400).json({ error: "Invalid class selection." });
     }
     const amount = unique.reduce((sum, item) => sum + PRICES[item], 0);
