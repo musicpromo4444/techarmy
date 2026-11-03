@@ -217,3 +217,30 @@
 .phone-number-entry input{border:0;padding-left:9px}
 .phone-number-entry input:focus{border:0}
 @media(max-width:460px){.international-phone{grid-template-columns:1fr}.international-phone select,.international-phone input{font-size:13px}}
+
+/* Hero opening: cinematic ninja sword sequence */
+.hero{min-height:0}
+.cinema-stage{order:0;aspect-ratio:16/9;height:auto;min-height:390px;max-height:650px;margin:0 auto 34px}
+.hero-copy{order:1;display:flex;flex-direction:column;align-items:center;gap:0;margin:0 auto;text-align:center}
+.hero-copy .eyebrow{justify-content:center;margin-bottom:18px}
+.hero-copy .lead{order:1;margin:0 auto;max-width:720px}
+.hero-copy .hero-actions{order:2;margin:25px 0 12px}
+.hero-copy h1{order:3;margin:12px 0 20px}
+.hero-copy>.text-link{order:4;justify-content:center}
+.hero-copy .hero-stats{order:5}
+.hero-foot{order:2}
+.warrior-silhouette{width:clamp(210px,36vw,430px);height:73%;bottom:6%;animation:warriorReady 4.8s ease-in-out infinite}
+.warrior-hood{left:25%;top:0;width:50%;height:43%;background:linear-gradient(105deg,#050607 0%,#27272b 42%,#090a0d 78%);clip-path:polygon(50% 0,91% 23%,100% 60%,79% 100%,21% 100%,0 60%,9% 23%);border:0;border-radius:38% 38% 22% 22%}
+.warrior-face{left:34%;top:25%;width:32%;height:15%;background:linear-gradient(180deg,#17181c,#050608 70%);clip-path:polygon(0 0,100% 0,87% 100%,13% 100%);border-top:1px solid #5d5550}
+.warrior-face:after{content:'';position:absolute;left:18%;right:18%;top:27%;height:3px;background:linear-gradient(90deg,#d5c8b8,#f3e5d6 45%,#d5c8b8);box-shadow:0 0 5px #d9c8b0;clip-path:polygon(0 0,45% 0,50% 100%,55% 0,100% 0,94% 100%,56% 72%,44% 72%,6% 100%)}
+.warrior-body{left:8%;right:8%;top:38%;bottom:0;background:linear-gradient(100deg,#030405 0%,#24252a 34%,#111216 58%,#030405 100%);clip-path:polygon(32% 0,68% 0,100% 100%,0 100%);border-top:2px solid #49474a}
+.warrior-body:after{content:'';position:absolute;left:34%;top:6%;width:32%;height:62%;border-left:2px solid #4b4140;border-right:2px solid #4b4140;transform:skewY(16deg);opacity:.7}
+.warrior-arm{right:-2%;top:46%;width:46%;height:11%;background:linear-gradient(180deg,#3a3839,#090a0c 75%);transform:rotate(-30deg);border-radius:50%;transform-origin:12% 50%;animation:ninjaArmSwing 4.8s ease-in-out infinite}
+.warrior-sword{right:-34%;top:37%;width:76%;height:5px;background:linear-gradient(90deg,#292c32 0%,#aeb4bf 25%,#fff 56%,#d8dce3 83%,#a82020 100%);transform:rotate(-35deg);transform-origin:3% 50%;box-shadow:0 0 7px #fff,0 0 20px #f22;animation:ninjaSwordSwing 4.8s cubic-bezier(.55,.05,.25,1) infinite}
+.warrior-cloak{background:linear-gradient(110deg,#030405,#17181d 48%,#030405);clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);opacity:.85}
+@keyframes ninjaArmSwing{0%,18%,100%{transform:rotate(-30deg)}38%{transform:rotate(-8deg)}55%{transform:rotate(28deg)}72%{transform:rotate(-46deg)}}
+@keyframes ninjaSwordSwing{0%,18%,100%{transform:rotate(-35deg)}36%{transform:rotate(-12deg)}51%{transform:rotate(24deg)}66%{transform:rotate(-55deg)}78%{transform:rotate(-28deg)}}
+@keyframes warriorReady{0%,100%{transform:translateX(-50%) translateY(0) rotate(-1deg)}35%{transform:translateX(-50%) translateY(-5px) rotate(1deg)}60%{transform:translateX(-50%) translateY(1px) rotate(-2deg)}}
+@keyframes slashFlash{0%,34%,74%,100%{opacity:0;transform:translateX(-30%) rotate(-18deg)}42%{opacity:1}55%{opacity:0;transform:translateX(35%) rotate(-18deg)}}
+@media(max-width:800px){.cinema-stage{width:100%;aspect-ratio:4/5;min-height:360px;max-height:520px;margin-bottom:28px}.hero-copy{margin:0 auto}.hero-copy .hero-actions{margin-top:20px}.hero-copy h1{font-size:clamp(54px,13vw,84px)}}
+@media(max-width:460px){.cinema-stage{aspect-ratio:4/5;height:auto;min-height:0}.warrior-silhouette{width:clamp(190px,58vw,280px);height:66%;bottom:8%}.hero-copy .lead{font-size:13px;padding:0 5px}.hero-copy h1{margin-top:14px}.hero-copy .hero-stats{margin-top:32px}}
