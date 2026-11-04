@@ -1,5 +1,5 @@
 const PRICES = {"Starter":500000,"Professional":1500000,"Master Class":3000000};
-const CLASS_GROUPS = [["Starter",process.env.WHATSAPP_GROUP_STARTER],["Professional",process.env.WHATSAPP_GROUP_PROFESSIONAL],["Master Class",process.env.WHATSAPP_GROUP_MASTER]];
+const CLASS_GROUPS = [["Starter",process.env.WHATSAPP_GROUP_STARTER],["Professional",process.env.WHATSAPP_GROUP_PROFESSIONAL],["Master Class",process.env.WHATSAPP_GROUP_MASTER]];\nconst levelOf = value => String(value).split(" :: ").pop();
 export default async function handler(req,res){
  if(req.method!=="GET")return res.status(405).json({error:"Method not allowed"});
  const reference=String(req.query.reference||"");
@@ -12,11 +12,11 @@ export default async function handler(req,res){
   if(!response.ok||!result.status||result.data?.status!=="success")return res.status(402).json({verified:false,error:"Payment has not been confirmed by Paystack."});
   const payment=result.data,metadata=payment.metadata||{};
   const classes=[...new Set(Array.isArray(metadata.classes)?metadata.classes:String(metadata.classes||"").split(",").map(x=>x.trim()).filter(Boolean))];
-  if(classes.length<1||classes.length>2)return res.status(400).json({verified:false,error:"Invalid package selection."});
-  const expectedKobo=classes.reduce((sum,item)=>sum+(PRICES[item]||0),0);
+  if(classes.length!==1)return res.status(400).json({verified:false,error:"Invalid package selection."});
+  const expectedKobo=classes.reduce((sum,item)=>sum+(PRICES[levelOf(item)]||0),0);
   if(payment.reference!==reference||payment.currency!=="NGN"||expectedKobo<1||Number(payment.amount)!==expectedKobo)return res.status(400).json({verified:false,error:"The paid amount does not match the selected package. Please contact support."});
   const amountNaira=Number(payment.amount)/100;
-  const group_links=CLASS_GROUPS.filter(([name,url])=>classes.includes(name)&&url).map(([name,url])=>({name,url}));
+  const group_links=CLASS_GROUPS.filter(([name,url])=>classes.some(item=>levelOf(item)===name)&&url).map(([name,url])=>({name,url}));
   const general_group_url=process.env.WHATSAPP_GROUP_GENERAL||"";
   const supabaseUrl=process.env.SUPABASE_URL,serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY;
   if(!supabaseUrl||!serviceKey)return res.status(503).json({verified:true,reference,amount_naira:amountNaira,classes,group_links,general_group_url,warning:"Payment verified, but enrolment storage is not configured. Contact the academy administrator."});
