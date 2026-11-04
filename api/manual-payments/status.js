@@ -1,7 +1,12 @@
+const GROUP_COLUMNS = {
+  web: { Starter: "web_starter_group_url", Professional: "web_professional_group_url", "Master Class": "web_master_group_url" },
+  automation: { Starter: "automation_starter_group_url", Professional: "automation_professional_group_url", "Master Class": "automation_master_group_url" },
+  creative: { Starter: "creative_starter_group_url", Professional: "creative_professional_group_url", "Master Class": "creative_master_group_url" }
+};
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
   const reference = String(req.query?.reference || "");
-  if (!reference.startsWith("TA-")) return res.status(400).json({ error: "Invalid registration reference." });
+  if (!/^TA-[A-Z0-9-]{10,40}$/.test(reference)) return res.status(400).json({ error: "Invalid registration reference." });
   const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(503).json({ error: "Payment service is not configured." });
   const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
@@ -12,9 +17,9 @@ export default async function handler(req, res) {
     ]);
     const [rows, ss] = await Promise.all([pr.json(), sr.json()]);
     if (!pr.ok || !rows?.[0]) return res.status(404).json({ error: "Registration not found." });
-    const p = rows[0], s = ss?.[0] || {}, groupLinks = [];
-    const map = { "Starter": s.starter_group_url, "Professional": s.professional_group_url, "Master Class": s.master_group_url };
-    if (p.status === "approved") for (const selection of p.classes || []) { const name = String(selection).split(" :: ").pop(); if (map[name]) groupLinks.push({ name: selection, url: map[name] }); }
-    return res.status(200).json({ payment: { ...p, bank_account: { bank_name: s.bank_name, account_name: s.account_name, account_number: s.account_number }, admin_whatsapp: s.admin_whatsapp || "2347017036508", general_group_url: s.general_group_url || null, group_links: groupLinks } });
+    const p = rows[0], settings = ss?.[0] || {};
+    const column = GROUP_COLUMNS[p.course_id]?.[p.level], groupUrl = p.status === "approved" && column ? settings[column] : "";
+    const groupLinks = groupUrl ? [{ name: p.course_title + " — " + p.level, url: groupUrl }] : [];
+    return res.status(200).json({ payment: { ...p, bank_account: { bank_name: settings.bank_name, account_name: settings.account_name, account_number: settings.account_number }, admin_whatsapp: settings.admin_whatsapp || "2347017036508", group_links: groupLinks } });
   } catch { return res.status(500).json({ error: "Could not retrieve your registration." }); }
 }
