@@ -36,7 +36,7 @@ async function saveVerifiedPayment(payment, res) {
     method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(row)
   });
   if (!saved.ok) return { ok: false, status: 502, body: { verified: true, reference, warning: "Payment confirmed, but saving the enrolment failed. Contact support with your payment reference." } };
-  return { ok: true, status: 200, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, classes: row.classes, group_links: groupUrl ? [{ name: courseTitle + " — " + level, url: groupUrl }] : [], warning: groupUrl ? "" : "Your payment is confirmed. The admin will send your course group invitation shortly." } };
+  return { ok: true, status: 200, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, classes: row.classes, group_links: groupUrl ? [{ name: courseTitle + " — " + level, url: groupUrl }] : [], warning: groupUrl ? "" : "Your payment is confirmed. The admin will send your course group invitation shortly." } };
 }
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
