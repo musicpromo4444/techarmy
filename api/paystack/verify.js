@@ -1,10 +1,6 @@
 const COURSES = { web: "WEB & APP DEVELOPMENT", automation: "AI AUTOMATION & INTELLIGENCE", creative: "AI CREATIVE PRODUCTION" };
 const PRICES = { Starter: 500000, Professional: 1500000, "Master Class": 3000000 };
-const GROUP_COLUMNS = {
-  web: { Starter: "web_starter_group_url", Professional: "web_professional_group_url", "Master Class": "web_master_group_url" },
-  automation: { Starter: "automation_starter_group_url", Professional: "automation_professional_group_url", "Master Class": "automation_master_group_url" },
-  creative: { Starter: "creative_starter_group_url", Professional: "creative_professional_group_url", "Master Class": "creative_master_group_url" }
-};
+const GROUP_COLUMNS = { Starter: "starter_group_url", Professional: "professional_group_url", "Master Class": "master_group_url" };
 async function saveVerifiedPayment(payment, res) {
   const metadata = payment.metadata || {};
   const courseId = String(metadata.course_id || ""), level = String(metadata.level || "");
@@ -20,7 +16,7 @@ async function saveVerifiedPayment(payment, res) {
   const settingsResponse = await fetch(base + "/rest/v1/tech_army_payment_settings?id=eq.default&select=*", { headers });
   const settingsRows = await settingsResponse.json();
   if (!settingsResponse.ok) return { ok: false, status: 502, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: String(metadata.student_name || ""), whatsapp: String(metadata.phone || ""), email: String(payment.customer?.email || ""), warning: "Payment confirmed, but course invitation settings could not be loaded." } };
-  const column = GROUP_COLUMNS[courseId][level], groupUrl = settingsRows?.[0]?.[column] || "";
+  const column = GROUP_COLUMNS[level], groupUrl = settingsRows?.[0]?.[column] || "";
   const row = {
     payment_reference: reference,
     student_name: String(metadata.student_name || "").slice(0, 120),
@@ -36,7 +32,7 @@ async function saveVerifiedPayment(payment, res) {
     method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(row)
   });
   if (!saved.ok) return { ok: false, status: 502, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, warning: "Payment confirmed, but saving the enrolment failed. Contact support with your payment reference." } };
-  return { ok: true, status: 200, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, classes: row.classes, group_links: groupUrl ? [{ name: courseTitle + " — " + level, url: groupUrl }] : [], warning: groupUrl ? "" : "Your payment is confirmed. The admin will send your course group invitation shortly." } };
+  return { ok: true, status: 200, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, classes: row.classes, group_links: groupUrl ? [{ name: level + " Class WhatsApp Group", url: groupUrl }] : [], warning: groupUrl ? "" : "Your payment is confirmed. The admin will send your course group invitation shortly." } };
 }
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
