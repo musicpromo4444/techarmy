@@ -15,11 +15,11 @@ async function saveVerifiedPayment(payment, res) {
   }
   const reference = String(payment.reference || "");
   const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return { ok: false, status: 503, body: { verified: true, reference, warning: "Payment is confirmed but enrolment storage is not configured. Contact the academy administrator." } };
+  if (!url || !key) return { ok: false, status: 503, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: String(metadata.student_name || ""), whatsapp: String(metadata.phone || ""), email: String(payment.customer?.email || ""), warning: "Payment is confirmed but enrolment storage is not configured. Contact the academy administrator." } };
   const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
   const settingsResponse = await fetch(base + "/rest/v1/tech_army_payment_settings?id=eq.default&select=*", { headers });
   const settingsRows = await settingsResponse.json();
-  if (!settingsResponse.ok) return { ok: false, status: 502, body: { verified: true, reference, warning: "Payment confirmed, but course invitation settings could not be loaded." } };
+  if (!settingsResponse.ok) return { ok: false, status: 502, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: String(metadata.student_name || ""), whatsapp: String(metadata.phone || ""), email: String(payment.customer?.email || ""), warning: "Payment confirmed, but course invitation settings could not be loaded." } };
   const column = GROUP_COLUMNS[courseId][level], groupUrl = settingsRows?.[0]?.[column] || "";
   const row = {
     payment_reference: reference,
@@ -35,7 +35,7 @@ async function saveVerifiedPayment(payment, res) {
   const saved = await fetch(base + "/rest/v1/tech_army_registrations?on_conflict=payment_reference", {
     method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(row)
   });
-  if (!saved.ok) return { ok: false, status: 502, body: { verified: true, reference, warning: "Payment confirmed, but saving the enrolment failed. Contact support with your payment reference." } };
+  if (!saved.ok) return { ok: false, status: 502, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, warning: "Payment confirmed, but saving the enrolment failed. Contact support with your payment reference." } };
   return { ok: true, status: 200, body: { verified: true, reference, amount_naira: Number(payment.amount) / 100, course_id: courseId, course_title: courseTitle, level, student_name: row.student_name, whatsapp: row.whatsapp, email: row.email, classes: row.classes, group_links: groupUrl ? [{ name: courseTitle + " — " + level, url: groupUrl }] : [], warning: groupUrl ? "" : "Your payment is confirmed. The admin will send your course group invitation shortly." } };
 }
 export default async function handler(req, res) {
