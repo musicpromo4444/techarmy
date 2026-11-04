@@ -24,6 +24,21 @@ export default async function handler(req, res) {
     if (req.method === "PATCH") {
       const { id, status, admin_notes } = req.body || {};
       if (!id || !STATUSES.has(status) || (admin_notes != null && (typeof admin_notes !== "string" || admin_notes.length > 2000))) return res.status(400).json({ error: "Invalid payment update." });
+      const lookup = await fetch(base + "/rest/v1/tech_army_manual_payments?id=eq." + encodeURIComponent(id) + "&select=*", { headers });
+      const existingRows = await lookup.json(), existing = existingRows?.[0];
+      if (!lookup.ok || !existing) return res.status(404).json({ error: "Manual payment registration not found." });
+      if (status === "approved") {
+        const enrolment = {
+          payment_reference: "MANUAL-" + existing.reference,
+          student_name: existing.student_name, whatsapp: existing.whatsapp,
+          email: existing.email || "", country: existing.country, classes: existing.classes,
+          course_id: existing.course_id, course_title: existing.course_title, level: existing.level,
+          amount_kobo: existing.amount_kobo, currency: "NGN", payment_status: "success",
+          batch_month: process.env.NEXT_BATCH_MONTH || (() => { const now = new Date(), next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)); return next.toISOString().slice(0, 7); })()
+        };
+        const saved = await fetch(base + "/rest/v1/tech_army_registrations?on_conflict=payment_reference", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=ignore-duplicates,return=minimal" }, body: JSON.stringify(enrolment) });
+        if (!saved.ok) return res.status(502).json({ error: "Could not save the verified student enrolment. Payment status was not changed." });
+      }
       const patch = { status, admin_notes: admin_notes || null, updated_at: new Date().toISOString() };
       if (status === "approved") patch.verified_at = new Date().toISOString();
       const r = await fetch(base + "/rest/v1/tech_army_manual_payments?id=eq." + encodeURIComponent(id), { method: "PATCH", headers: { ...headers, "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(patch) });
