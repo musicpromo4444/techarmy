@@ -283,3 +283,27 @@
 .level-card .primary{margin-top:auto}
 @media(max-width:900px){.level-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.level-grid{grid-template-columns:1fr}.level-card>p{min-height:0}.level-card{padding:22px}}
+
+/* Simplified course explanation followed by a clear vertical plan journey */
+.course-explanation-card{max-width:920px;margin:0 auto 48px;padding:clamp(24px,4vw,42px);border:1px solid #493238;background:linear-gradient(145deg,#17171b,#0b0c0f);box-shadow:0 18px 55px #0005}
+.course-explanation-card h2{font-size:clamp(34px,5vw,55px);margin:18px 0}
+.course-explanation-card .course-summary{font-size:15px;line-height:1.85;color:#c5c0c3;max-width:780px;margin-bottom:25px}
+.course-explanation-card ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:15px 24px}
+.course-explanation-card li{display:flex;align-items:flex-start;gap:10px;color:#c3c0c2;font-size:13px;line-height:1.7}
+.course-explanation-card li svg{color:var(--red);flex:0 0 auto;margin-top:2px}
+.level-section{border-top:0;padding-top:12px}
+.plan-prompt{text-align:center;padding:30px 20px 38px;margin-bottom:20px;border-block:1px solid #ffffff20;background:linear-gradient(90deg,transparent,#25111288,transparent)}
+.plan-prompt .eyebrow{justify-content:center}
+.plan-prompt h2{font-size:clamp(42px,6vw,68px);margin:18px 0}
+.plan-prompt>p{color:#aaa;font-size:13px;line-height:1.7}
+.scroll-cue{display:inline-flex;align-items:center;gap:10px;margin-top:10px;color:#ff8279;font:11px 'DM Mono';letter-spacing:1.5px}
+.scroll-cue .down-arrow{transform:rotate(90deg);animation:planArrow 1.2s ease-in-out infinite}
+.level-grid{display:grid;grid-template-columns:minmax(0,780px);justify-content:center;gap:15px}
+.level-card{padding:clamp(23px,4vw,34px);gap:14px}
+.level-card>p{min-height:0;max-width:650px}
+.level-card h3{font-size:clamp(34px,5vw,46px)}
+.level-card .primary{max-width:100%;text-decoration:none}
+.next-plan-cue{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px;color:#ff8279;font:10px 'DM Mono';letter-spacing:1.3px}
+.next-plan-cue svg{transform:rotate(90deg);animation:planArrow 1.2s ease-in-out infinite}
+@keyframes planArrow{50%{transform:translateY(5px) rotate(90deg)}}
+@media(max-width:650px){.course-explanation-card ul{grid-template-columns:1fr}.course-explanation-card{margin-bottom:30px}.plan-prompt{padding:25px 8px}.level-card{padding:22px}}
