@@ -1,6 +1,6 @@
 import { normalizeWhatsApp } from "../_lib/phone.js";
 import { randomUUID } from "node:crypto";
-const ALLOWED = new Set(["Starter", "Professional", "Master Class"]);
+const ALLOWED = new Set(["Starter", "Professional", "Master Class"]);\nconst levelOf = value => String(value).split(" :: ").pop();
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   const { name, phone, country_code, email, country, classes } = req.body || {};
   const normalizedPhone = normalizeWhatsApp(phone, country_code);
   if (!normalizedPhone) return res.status(400).json({ error: "Enter a valid WhatsApp number for the selected country code." });
-  if (![name, phone, country].every(v => typeof v === "string" && v.trim()) || !Array.isArray(classes) || !classes.length || classes.length > 2 || classes.some(c => !ALLOWED.has(c))) return res.status(400).json({ error: "Enter your name and WhatsApp number and select at least one valid class." });
+  if (![name, phone, country].every(v => typeof v === "string" && v.trim()) || !Array.isArray(classes) || !classes.length || classes.length !== 1 || classes.some(c => !ALLOWED.has(levelOf(c)))) return res.status(400).json({ error: "Enter your name and WhatsApp number and select at least one valid class." });
   if (name.length > 120 || phone.length > 40 || (email && email.length > 180) || country.length > 80) return res.status(400).json({ error: "One or more fields are too long." });
   const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
   try {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     const settings = settingsRows?.[0];
     if (!settings?.bank_name || !settings?.account_name || !settings?.account_number) return res.status(409).json({ error: "Bank-transfer details are not available yet. Please use Paystack or contact the admin." });
     const prices = { "Starter": 500000, "Professional": 1500000, "Master Class": 3000000 };
-    const amount = classes.reduce((sum, c) => sum + prices[c], 0);
+    const amount = classes.reduce((sum, c) => sum + prices[levelOf(c)], 0);
     const reference = "TA-" + randomUUID().replace(/-/g, "").slice(0, 20).toUpperCase();
     const payload = { reference, student_name: name.trim(), whatsapp: normalizedPhone, email: email?.trim().toLowerCase() || null, country: country.trim(), classes: [...new Set(classes)], amount_kobo: amount, status: "pending" };
     const created = await fetch(base + "/rest/v1/tech_army_manual_payments", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(payload) });
