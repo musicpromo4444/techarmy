@@ -17,10 +17,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Please complete your details and select at least one class." });
     }
     const unique = [...new Set(classes)];
-    if (unique.length > 2 || unique.some((item) => !Object.prototype.hasOwnProperty.call(PRICES, item))) {
+    if (unique.length !== 1 || unique.some((item) => !Object.prototype.hasOwnProperty.call(PRICES, levelOf(item)))) {
       return res.status(400).json({ error: "Invalid class selection." });
     }
-    const amount = unique.reduce((sum, item) => sum + PRICES[item], 0);
+    const amount = unique.reduce((sum, item) => sum + PRICES[levelOf(item)], 0);
     const reference = "TA-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9).toUpperCase();
     const origin = process.env.APP_URL || `https://${req.headers.host}`;
     const response = await fetch("https://api.paystack.co/transaction/initialize", {
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
             { display_name: "Student name", variable_name: "student_name", value: name },
             { display_name: "WhatsApp", variable_name: "whatsapp", value: normalizedPhone },
             { display_name: "Country", variable_name: "country", value: country },
-            { display_name: "Selected classes", variable_name: "classes", value: unique.join(", ") }
+            { display_name: "Selected course and level", variable_name: "classes", value: unique.join(", ") }
           ],
           student_name: name,
           phone: normalizedPhone,
