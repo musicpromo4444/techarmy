@@ -1,6 +1,6 @@
 const CATEGORIES=["AI Movies & Dramas","Websites & Apps","AI Graphics & Images","Videos & Animations"];
 const TYPES=["video","website","image"];
-function authorized(req){const token=String(req.headers.authorization||"").replace(/^Bearer\\s+/i,"");return Boolean(process.env.ADMIN_API_KEY&&token&&token===process.env.ADMIN_API_KEY);}
+function authorized(req){const token=String(req.headers.authorization||"").replace(/^Bearer\\s+/i,"");return Boolean(process.env.ADMIN_API_KEY&&token&&token===(process.env.CONTENT_ADMIN_KEY||process.env.ADMIN_API_KEY));}
 function validUrl(v){try{return new URL(v).protocol==="https:";}catch{return false;}}
 export default async function handler(req,res){
  if(!authorized(req))return res.status(401).json({error:"Admin access required."});
