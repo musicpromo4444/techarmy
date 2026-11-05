@@ -9,7 +9,7 @@ async function saveVerifiedPayment(payment) {
   const metadata = payment.metadata || {};
   const chosen = Array.isArray(metadata.selections) && metadata.selections.length ? metadata.selections : [{ course_id: metadata.course_id, level: metadata.level }];
   const seen = new Set();
-  if (chosen.length < 1 || chosen.length > 3 || chosen.some(s => !s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id) || !seen.add(s.course_id))) {
+  if (chosen.length < 1 || chosen.length > 3 || chosen.some(s => { if (!s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id)) return true; seen.add(s.course_id); return false; })) {
     return { ok: false, status: 400, body: { verified: false, error: "Payment does not match valid course selections. Contact support." } };
   }
   const expected = chosen.reduce((sum, s) => sum + PRICES[s.level], 0);
