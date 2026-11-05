@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         const enrolment = {
           payment_reference: "MANUAL-" + existing.reference,
           student_name: existing.student_name, whatsapp: existing.whatsapp,
-          email: existing.email || "", country: existing.country, classes: existing.classes,
+          email: existing.email || "", country: existing.country, classes: existing.classes, course_selections: existing.course_selections || [{ course_id: existing.course_id, level: existing.level }],
           course_id: existing.course_id, course_title: existing.course_title, level: existing.level,
           amount_kobo: existing.amount_kobo, currency: "NGN", payment_status: "success",
           batch_month: process.env.NEXT_BATCH_MONTH || (() => { const now = new Date(), next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)); return next.toISOString().slice(0, 7); })()
