@@ -1,4 +1,8 @@
-const GROUP_COLUMNS = { Starter: "starter_group_url", Professional: "professional_group_url", "Master Class": "master_group_url" };
+const GROUP_COLUMNS = {
+  web: { Starter: "web_starter_group_url", Professional: "web_professional_group_url", "Master Class": "web_master_group_url" },
+  automation: { Starter: "automation_starter_group_url", Professional: "automation_professional_group_url", "Master Class": "automation_master_group_url" },
+  creative: { Starter: "creative_starter_group_url", Professional: "creative_professional_group_url", "Master Class": "creative_master_group_url" }
+};
 export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
   const reference = String(req.query?.reference || "");
@@ -14,8 +18,8 @@ export default async function handler(req, res) {
     const [rows, ss] = await Promise.all([pr.json(), sr.json()]);
     if (!pr.ok || !rows?.[0]) return res.status(404).json({ error: "Registration not found." });
     const p = rows[0], settings = ss?.[0] || {};
-    const column = GROUP_COLUMNS[p.level], groupUrl = p.status === "approved" && column ? settings[column] : "";
-    const groupLinks = groupUrl ? [{ name: p.level + " Class WhatsApp Group", url: groupUrl }] : [];
+    const column = GROUP_COLUMNS[p.course_id]?.[p.level], groupUrl = p.status === "approved" && column ? settings[column] : "";
+    const groupLinks = groupUrl ? [{ name: (p.course_title || p.course_id) + " — " + p.level + " WhatsApp Group", url: groupUrl }] : [];
     return res.status(200).json({ payment: { ...p, bank_account: { bank_name: settings.bank_name, account_name: settings.account_name, account_number: settings.account_number }, admin_whatsapp: settings.admin_whatsapp || "2347017036508", group_links: groupLinks } });
   } catch { return res.status(500).json({ error: "Could not retrieve your registration." }); }
 }
