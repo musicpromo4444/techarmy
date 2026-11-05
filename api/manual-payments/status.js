@@ -18,8 +18,12 @@ export default async function handler(req, res) {
     const [rows, ss] = await Promise.all([pr.json(), sr.json()]);
     if (!pr.ok || !rows?.[0]) return res.status(404).json({ error: "Registration not found." });
     const p = rows[0], settings = ss?.[0] || {};
-    const column = GROUP_COLUMNS[p.course_id]?.[p.level], groupUrl = p.status === "approved" && column ? settings[column] : "";
-    const groupLinks = groupUrl ? [{ name: (p.course_title || p.course_id) + " — " + p.level + " WhatsApp Group", url: groupUrl }] : [];
+    const chosen = Array.isArray(p.course_selections) && p.course_selections.length ? p.course_selections : [{ course_id: p.course_id, level: p.level }];
+    const groupLinks = p.status === "approved" ? chosen.map(s => {
+      const column = GROUP_COLUMNS[s.course_id]?.[s.level], groupUrl = column ? settings[column] : "";
+      const title = ({ web: "WEB & APP DEVELOPMENT", automation: "AI AUTOMATION & INTELLIGENCE", creative: "AI CREATIVE PRODUCTION" })[s.course_id] || s.course_id;
+      return groupUrl ? { name: title + " — " + s.level, url: groupUrl } : null;
+    }).filter(Boolean) : [];
     return res.status(200).json({ payment: { ...p, bank_account: { bank_name: settings.bank_name, account_name: settings.account_name, account_number: settings.account_number }, admin_whatsapp: settings.admin_whatsapp || "2347017036508", group_links: groupLinks } });
   } catch { return res.status(500).json({ error: "Could not retrieve your registration." }); }
 }
