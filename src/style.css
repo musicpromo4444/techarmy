@@ -323,3 +323,40 @@
 .add-course-row select{width:100%;background:#090a0d;border:1px solid #37383d;color:#eee;padding:12px;font:11px Manrope}
 .add-course-row .primary{grid-column:1/-1;margin-top:0}
 @media(max-width:520px){.add-course-row{grid-template-columns:1fr}.add-course-row .primary{grid-column:auto}.selected-course-row{flex-wrap:wrap}}
+
+/* White three-step course enrolment wizard */
+.modal-backdrop .modal{background:#fff!important;color:#171717!important;border:1px solid #ead5d5!important}
+.modal-backdrop .modal h2{color:#171717!important}.modal-backdrop .modal h2 em{color:#d92332!important}
+.modal-backdrop .modal .eyebrow{color:#c52a32!important}.modal-backdrop .modal .modal-intro{color:#626262!important}
+.modal-backdrop .modal-close{color:#333!important;background:#f7f7f7!important}
+.modal-backdrop .modal label{color:#555!important}.modal-backdrop .modal input{background:#fff!important;color:#171717!important;border:1px solid #d8d8d8!important}
+.modal-backdrop .modal .verified-summary{background:#fff!important;color:#171717!important;border:1px solid #e5caca!important}
+.modal-backdrop .modal .selected-course-row>span b{color:#171717}.modal-backdrop .modal .selected-course-row>span small{color:#777}
+.modal-backdrop .modal .registration-choice .choice{background:#fff!important;color:#222!important;border:1px solid #ddd!important}
+.modal-backdrop .modal .registration-choice .choice span{color:#666!important}
+.modal-backdrop .modal .registration-choice .choice.active{background:#fff4f4!important;border-color:#d92332!important}
+.modal-backdrop .modal .manual-overview{background:#fff8f8!important;color:#333!important;border-color:#e9bcbc!important}
+.modal-backdrop .modal .privacy{color:#777!important}
+.wizard-course-list,.wizard-level-list{display:grid;gap:12px;margin:20px 0}
+.wizard-course{width:100%;display:flex;align-items:center;gap:13px;padding:16px;text-align:left;background:#fff;border:1px solid #dedede;color:#171717}
+.wizard-course.selected{border:1.5px solid #d92332;background:#fff4f4}
+.wizard-check{width:25px;height:25px;display:grid;place-items:center;flex:0 0 25px;border:1.5px solid #b9b9b9;border-radius:6px;color:#fff}
+.wizard-course.selected .wizard-check{background:#d92332;border-color:#d92332}
+.wizard-course-copy,.wizard-level-copy{display:grid;gap:5px;min-width:0;flex:1}
+.wizard-course-copy b{font-size:14px;color:#191919}.wizard-course-copy small{font-size:11px;line-height:1.55;color:#707070}
+.wizard-course-number,.wizard-course-heading>span{font:11px 'DM Mono';color:#d92332}
+.wizard-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:15px;border-top:1px solid #eee}
+.wizard-footer>span{font-size:11px;color:#666}.wizard-footer .primary{display:flex;align-items:center;justify-content:center;gap:8px}
+.wizard-level-course{padding:16px;border:1px solid #e5e5e5;background:#fff}
+.wizard-course-heading{display:flex;align-items:center;gap:12px;padding-bottom:13px;margin-bottom:12px;border-bottom:1px solid #eee}
+.wizard-course-heading>div{display:grid;gap:4px}.wizard-course-heading b{font-size:14px;color:#171717}.wizard-course-heading small{font-size:10px;color:#777}
+.wizard-level-options{display:grid;gap:8px}
+.wizard-level{width:100%;display:flex;align-items:center;gap:10px;padding:12px;background:#fff;border:1px solid #e1e1e1;text-align:left;color:#171717}
+.wizard-level.selected{border-color:#d92332;background:#fff5f5}
+.wizard-radio{width:19px;height:19px;display:grid;place-items:center;border:1.5px solid #aaa;border-radius:50%;flex:0 0 19px}
+.wizard-level.selected .wizard-radio{border-color:#d92332}.wizard-radio i{width:9px;height:9px;border-radius:50%;background:#d92332}
+.wizard-level-copy b{font-size:11px;color:#222}.wizard-level-copy small{font:9px 'DM Mono';color:#777}
+.wizard-level>strong{font:700 14px 'Barlow Condensed';color:#d92332;white-space:nowrap}
+.wizard-back{border:1px solid #ddd;background:#fff;color:#555;padding:12px 14px;font:10px 'DM Mono'}
+.checkout-edit{margin:0 0 15px}
+@media(max-width:560px){.modal-backdrop{padding:12px!important;align-items:flex-start!important}.modal-backdrop .modal{width:100%!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;padding:22px 17px!important}.wizard-course{padding:14px 11px;gap:10px}.wizard-footer{align-items:stretch;flex-wrap:wrap}.wizard-footer>span{width:100%}.wizard-footer .primary{width:100%}.wizard-level-course{padding:12px}.wizard-level{padding:11px 9px;gap:8px}}
