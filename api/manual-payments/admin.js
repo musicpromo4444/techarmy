@@ -1,5 +1,5 @@
 const STATUSES = new Set(["approved", "rejected"]);
-const GROUP_KEYS = ["starter_group_url","professional_group_url","master_group_url"];
+const GROUP_KEYS = ["web_starter_group_url","web_professional_group_url","web_master_group_url","automation_starter_group_url","automation_professional_group_url","automation_master_group_url","creative_starter_group_url","creative_professional_group_url","creative_master_group_url"];
 function authorized(req) {
   const token = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "");
   return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY);
