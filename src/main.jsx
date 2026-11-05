@@ -2,6 +2,7 @@ import React,{useEffect,useState} from "react";
 import{createRoot}from"react-dom/client";
 import{ArrowUpRight,Menu,X,Play,Code2,Image,Video,Globe2,Check,Clock,MessageCircle,Shield,Cpu,Sparkles,Workflow,Film,ChevronRight}from"lucide-react";
 import"./style.css";
+import"./camouflage.css";
 import Admin from"./admin.jsx";
 import{InternationalPhoneInput,getCountryName}from"./InternationalPhoneInput.jsx";
 import{parsePhoneNumberFromString}from"libphonenumber-js";
