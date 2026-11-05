@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       (email != null && (typeof email !== "string" || email.length > 180)) ||
       typeof country !== "string" || !country.trim() || country.length > 80 ||
       chosen.length < 1 || chosen.length > 3 ||
-      chosen.some(s => !s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id) || !seen.add(s.course_id))) {
+      chosen.some(s => { if (!s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id)) return true; seen.add(s.course_id); return false; })) {
     return res.status(400).json({ error: "Enter valid details and choose one level for each course." });
   }
   const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
