@@ -307,3 +307,19 @@
 .next-plan-cue svg{transform:rotate(90deg);animation:planArrow 1.2s ease-in-out infinite}
 @keyframes planArrow{50%{transform:translateY(5px) rotate(90deg)}}
 @media(max-width:650px){.course-explanation-card ul{grid-template-columns:1fr}.course-explanation-card{margin-bottom:30px}.plan-prompt{padding:25px 8px}.level-card{padding:22px}}
+
+/* Multi-course checkout */
+.selected-course-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #ffffff18}
+.selected-course-row>span{display:grid;gap:4px;min-width:0}
+.selected-course-row>span b{font:700 13px 'Barlow Condensed';color:#f2eee9}
+.selected-course-row>span small{font-size:10px;color:#999}
+.selected-course-row> b{white-space:nowrap}
+.remove-course{border:1px solid #75413d;background:transparent;color:#ff8178;padding:7px;font:9px 'DM Mono';white-space:nowrap}
+.selected-course-total{display:flex;align-items:center;justify-content:space-between;padding-top:13px}
+.selected-course-total>b{font:10px 'DM Mono';letter-spacing:1px;color:#bbb}
+.selected-course-total>strong{font:700 22px 'Barlow Condensed';color:#ff5147}
+.add-course-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;border:1px solid #3b3030;background:#121114;margin:12px 0 18px}
+.add-course-row label{display:grid;gap:7px;font:9px 'DM Mono';letter-spacing:1px;color:#aaa}
+.add-course-row select{width:100%;background:#090a0d;border:1px solid #37383d;color:#eee;padding:12px;font:11px Manrope}
+.add-course-row .primary{grid-column:1/-1;margin-top:0}
+@media(max-width:520px){.add-course-row{grid-template-columns:1fr}.add-course-row .primary{grid-column:auto}.selected-course-row{flex-wrap:wrap}}
