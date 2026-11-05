@@ -1,4 +1,5 @@
 import { normalizeWhatsApp } from "../_lib/phone.js";
+import { randomUUID } from "node:crypto";
 const COURSES = {
   web: "WEB & APP DEVELOPMENT",
   automation: "AI AUTOMATION & INTELLIGENCE",
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
     const totalAmount = chosen.reduce((sum, s) => sum + PRICES[s.level], 0);
     const first = chosen[0], courseTitle = COURSES[first.course_id], selectedLevel = first.level;
     const classes = chosen.map(s => s.course_id + " :: " + COURSES[s.course_id] + " :: " + s.level);
-    const reference = "TA-" + Date.now() + "-" + cryptoRandom();
+    const reference = "TA-" + randomUUID().replace(/-/g, "").slice(0, 20).toUpperCase();
     const origin = (process.env.APP_URL || "https://" + req.headers.host).replace(/\/$/, "");
     const response = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",
@@ -50,7 +51,4 @@ export default async function handler(req, res) {
   } catch {
     return res.status(500).json({ error: "Unable to initialize payment. Please try again." });
   }
-}
-function cryptoRandom() {
-  return Array.from({ length: 8 }, () => "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"[Math.floor(Math.random() * 36)]).join("");
 }
