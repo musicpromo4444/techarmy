@@ -1,3 +1,4 @@
+import "./showcase-live.css";
 const categories=["AI Movies & Dramas","Websites & Apps","AI Graphics & Images","Videos & Animations"];
 let projects=[],ready=false,painting=false;
 const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
