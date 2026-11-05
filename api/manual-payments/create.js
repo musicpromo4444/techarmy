@@ -6,13 +6,16 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   const url = process.env.SUPABASE_URL, key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return res.status(503).json({ error: "Direct bank transfer is not configured yet." });
-  const { name, phone, country_code, email, country, course_id, level } = req.body || {};
+  const { name, phone, country_code, email, country, selections, course_id, level } = req.body || {};
   const normalizedPhone = normalizeWhatsApp(phone, country_code);
+  const chosen = Array.isArray(selections) && selections.length ? selections : [{ course_id, level }];
+  const seen = new Set();
   if (typeof name !== "string" || !name.trim() || name.length > 120 || !normalizedPhone ||
       (email != null && (typeof email !== "string" || email.length > 180)) ||
       typeof country !== "string" || !country.trim() || country.length > 80 ||
-      !Object.prototype.hasOwnProperty.call(COURSES, course_id) || !Object.prototype.hasOwnProperty.call(PRICES, level)) {
-    return res.status(400).json({ error: "Enter valid details and choose one course and one level." });
+      chosen.length < 1 || chosen.length > 3 ||
+      chosen.some(s => !s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id) || !seen.add(s.course_id))) {
+    return res.status(400).json({ error: "Enter valid details and choose one level for each course." });
   }
   const base = url.replace(/\/$/, ""), headers = { apikey: key, Authorization: "Bearer " + key };
   try {
@@ -20,10 +23,10 @@ export default async function handler(req, res) {
     const settingsRows = await sr.json(), settings = settingsRows?.[0];
     if (!sr.ok) return res.status(502).json({ error: "Could not load bank-transfer settings." });
     if (!settings?.bank_name || !settings?.account_name || !settings?.account_number) return res.status(409).json({ error: "Admin bank details are not configured yet. Please contact the admin." });
-    const courseTitle = COURSES[course_id], amount = PRICES[level];
-    const selection = course_id + " :: " + courseTitle + " :: " + level;
+    const first = chosen[0], courseTitle = COURSES[first.course_id], amount = chosen.reduce((sum, s) => sum + PRICES[s.level], 0);
+    const classes = chosen.map(s => s.course_id + " :: " + COURSES[s.course_id] + " :: " + s.level);
     const reference = "TA-" + randomUUID().replace(/-/g, "").slice(0, 20).toUpperCase();
-    const payload = { reference, student_name: name.trim(), whatsapp: normalizedPhone, email: email?.trim().toLowerCase() || null, country: country.trim(), classes: [selection], course_id, course_title: courseTitle, level, amount_kobo: amount, status: "pending" };
+    const payload = { reference, student_name: name.trim(), whatsapp: normalizedPhone, email: email?.trim().toLowerCase() || null, country: country.trim(), classes, course_selections: chosen, course_id: first.course_id, course_title: courseTitle, level: first.level, amount_kobo: amount, status: "pending" };
     const created = await fetch(base + "/rest/v1/tech_army_manual_payments", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "return=representation" }, body: JSON.stringify(payload) });
     const rows = await created.json();
     if (!created.ok || !rows?.[0]) return res.status(502).json({ error: "We could not save your registration. Please try again." });
