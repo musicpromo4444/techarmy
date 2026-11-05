@@ -206,21 +206,21 @@ body:has(.course-page){background:#fff!important;color:#171719}
 .level-subtitle{color:#a51f29!important}
 .next-plan-cue{display:none!important}
 
-/* Three illustrated commander faces: calm recruit → focused officer → strict general */
+/* Rank portraits: approachable recruit → battle-ready officer → strict commanding general */
 .level-commander{
   position:absolute;right:18px;top:22px;width:86px;height:96px;
   display:flex;align-items:center;justify-content:center;pointer-events:none;
-  filter:drop-shadow(0 5px 5px #3b101522);
+  filter:drop-shadow(0 6px 7px #3b101533);
 }
 .commander-face{
-  position:absolute;top:28px;width:48px;height:51px;border-radius:43% 43% 48% 48%;
-  background:linear-gradient(110deg,#f0c9a7,#c98d70);border:2px solid #633b32;
-  box-shadow:inset -5px -3px 0 #9e6454;
+  position:absolute;top:29px;width:47px;height:51px;border-radius:44% 44% 48% 48%;
+  background:linear-gradient(110deg,#f2c9a7,#c98d70 72%,#a96f5b);
+  border:2px solid #633b32;box-shadow:inset -5px -3px 0 #9e6454;
 }
 .commander-helmet{
   position:absolute;z-index:2;top:13px;width:66px;height:29px;
   border:2px solid #303b2a;border-radius:50% 50% 12% 12%;
-  background:linear-gradient(110deg,#77885a,#34452e 70%);
+  background:linear-gradient(110deg,#879665,#526640 55%,#34452e);
 }
 .commander-helmet:after{
   content:"";position:absolute;left:-4px;right:-4px;bottom:-5px;height:7px;
@@ -237,18 +237,57 @@ body:has(.course-page){background:#fff!important;color:#171719}
 .commander-nose{position:absolute;left:21px;top:21px;width:5px;height:11px;border-left:1px solid #9c6654}
 .commander-mouth{position:absolute;left:15px;bottom:8px;width:17px;height:2px;background:#70443c;border-radius:4px}
 .commander-brow{position:absolute;left:7px;right:7px;top:14px;height:2px;background:#4b3028}
-.commander-1 .commander-face{border-radius:43% 43% 48% 48%}
-.commander-1 .commander-brow{transform:rotate(0deg);opacity:.55}
-.commander-1 .commander-mouth{width:18px;height:3px;border-radius:0 0 12px 12px;background:#8f5148}
-.commander-2 .commander-helmet{height:34px;background:linear-gradient(110deg,#596c43,#202e20)}
-.commander-2 .commander-brow{height:3px;transform:rotate(-5deg)}
-.commander-2 .commander-mouth{width:19px;height:2px;background:#60362f}
-.commander-3 .commander-helmet{top:7px;width:76px;height:40px;border-radius:48% 48% 8% 8%;background:linear-gradient(110deg,#8e9a69,#1f2c20 72%);border-width:3px}
-.commander-3 .commander-face{top:31px;width:50px;height:52px;background:linear-gradient(110deg,#e0b391,#a76c57);border-width:3px}
-.commander-3 .commander-brow{top:13px;height:5px;background:#34231e;transform:rotate(-9deg)}
-.commander-3 .commander-eyes{top:21px;height:5px;background:linear-gradient(90deg,#211815 0 32%,transparent 32% 68%,#211815 68%)}
-.commander-3 .commander-mouth{bottom:7px;width:23px;height:3px;background:#4a2926}
-.commander-3 .commander-collar{height:29px;background:linear-gradient(90deg,#4d171d,#b12b35,#4d171d);border-color:#5c1019}
+
+/* Starter: simple helmet and relaxed expression */
+.commander-0 .commander-helmet{background:linear-gradient(110deg,#9ca77a,#718454 60%,#526640)}
+.commander-0 .commander-brow{opacity:.45}
+.commander-0 .commander-mouth{width:17px;height:3px;border-radius:0 0 12px 12px;background:#8f5148}
+
+/* Professional: reinforced helmet, focused eyes and firmer expression */
+.commander-1 .commander-helmet{
+  top:10px;width:72px;height:34px;border-radius:48% 48% 8% 8%;
+  background:linear-gradient(110deg,#77885a,#34452e 72%);border-width:3px;
+}
+.commander-1 .commander-face{top:31px;background:linear-gradient(110deg,#e7bd99,#b87d62);border-width:2px}
+.commander-1 .commander-brow{top:13px;height:4px;background:#382720;transform:rotate(-5deg)}
+.commander-1 .commander-eyes{top:21px;height:5px;background:linear-gradient(90deg,#211815 0 31%,transparent 31% 69%,#211815 69%)}
+.commander-1 .commander-mouth{width:19px;height:2px;background:#60362f}
+
+/* Master Class: commanding general with peaked cap, severe brows and rank insignia */
+.commander-2 .commander-helmet{
+  top:5px;width:78px;height:42px;border-radius:48% 48% 7% 7%;
+  background:linear-gradient(110deg,#9ca77a 0%,#586d43 42%,#1f2c20 100%);
+  border:3px solid #253321;
+}
+.commander-2 .commander-helmet:before{
+  content:"";position:absolute;left:-5px;right:-5px;bottom:1px;height:8px;
+  background:linear-gradient(90deg,#8f1722,#e34a4d,#7c111c);
+  border:1px solid #5c1019;border-radius:3px;
+}
+.commander-2 .commander-face{
+  top:34px;width:50px;height:51px;
+  background:linear-gradient(110deg,#d7a482,#925944 85%);
+  border:3px solid #493027;box-shadow:inset -7px -3px 0 #754433;
+}
+.commander-2 .commander-brow{
+  top:13px;height:6px;background:#2b1c18;transform:rotate(-9deg);
+  box-shadow:0 2px 0 #694334;
+}
+.commander-2 .commander-eyes{
+  top:22px;height:5px;
+  background:linear-gradient(90deg,#17110f 0 34%,transparent 34% 66%,#17110f 66%);
+}
+.commander-2 .commander-mouth{
+  left:12px;bottom:7px;width:25px;height:4px;background:#38201d;border-radius:1px;
+}
+.commander-2 .commander-collar{
+  height:30px;background:linear-gradient(90deg,#4d171d,#b12b35,#4d171d);
+  border-color:#5c1019;
+}
+.commander-2 .commander-collar:after{
+  content:"★★★";position:absolute;left:0;right:0;top:1px;
+  color:#f4d38a;text-align:center;font:8px Georgia;letter-spacing:2px;
+}
 @media(max-width:900px){
  .level-grid{grid-template-columns:1fr!important;gap:18px}
  .level-card{padding:26px 22px!important;min-height:0}
