@@ -10,33 +10,36 @@ export default async function handler(req, res) {
   const secret = process.env.PAYSTACK_SECRET_KEY;
   if (!secret) return res.status(503).json({ error: "Online payment is not configured. Please contact the admin." });
   try {
-    const { name, phone, country_code, email, country, course_id, level } = req.body || {};
+    const { name, phone, country_code, email, country, selections, course_id, level } = req.body || {};
     const normalizedPhone = normalizeWhatsApp(phone, country_code);
+    const chosen = Array.isArray(selections) && selections.length ? selections : [{ course_id, level }];
+    const seen = new Set();
     if (typeof name !== "string" || !name.trim() || name.length > 120 || !normalizedPhone ||
-        typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 180 ||
+        typeof email !== "string" || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 180 ||
         typeof country !== "string" || !country.trim() || country.length > 80 ||
-        !Object.prototype.hasOwnProperty.call(COURSES, course_id) ||
-        !Object.prototype.hasOwnProperty.call(PRICES, level)) {
-      return res.status(400).json({ error: "Please check your name, WhatsApp number, email, country, course and level." });
+        chosen.length < 1 || chosen.length > 3 ||
+        chosen.some(s => !s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id) || !seen.add(s.course_id))) {
+      return res.status(400).json({ error: "Please check your details and choose one level for each course." });
     }
-    const courseTitle = COURSES[course_id], amount = PRICES[level];
-    const selection = course_id + " :: " + courseTitle + " :: " + level;
+    const totalAmount = chosen.reduce((sum, s) => sum + PRICES[s.level], 0);
+    const first = chosen[0], courseTitle = COURSES[first.course_id], selectedLevel = first.level;
+    const classes = chosen.map(s => s.course_id + " :: " + COURSES[s.course_id] + " :: " + s.level);
     const reference = "TA-" + Date.now() + "-" + cryptoRandom();
     const origin = (process.env.APP_URL || "https://" + req.headers.host).replace(/\/$/, "");
     const response = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",
       headers: { Authorization: "Bearer " + secret, "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: email.trim().toLowerCase(), amount, currency: "NGN", reference,
+        email: email.trim().toLowerCase(), amount: totalAmount, currency: "NGN", reference,
         callback_url: origin + "/?payment=success",
         metadata: {
           student_name: name.trim(), phone: normalizedPhone, country: country.trim(),
-          course_id, course_title: courseTitle, level, classes: [selection],
+          course_id: first.course_id, course_title: courseTitle, level: selectedLevel, classes, selections: chosen,
           custom_fields: [
             { display_name: "Student name", variable_name: "student_name", value: name.trim() },
             { display_name: "WhatsApp", variable_name: "whatsapp", value: normalizedPhone },
-            { display_name: "Course", variable_name: "course", value: courseTitle },
-            { display_name: "Training level", variable_name: "level", value: level }
+            { display_name: "Courses", variable_name: "courses", value: classes.join("; ") },
+            { display_name: "Total courses", variable_name: "course_count", value: String(chosen.length) }
           ]
         }
       })
