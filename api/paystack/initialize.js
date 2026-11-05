@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     const chosen = Array.isArray(selections) && selections.length ? selections : [{ course_id, level }];
     const seen = new Set();
     if (typeof name !== "string" || !name.trim() || name.length > 120 || !normalizedPhone ||
-        typeof email !== "string" || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email) || email.length > 180 ||
+        typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 180 ||
         typeof country !== "string" || !country.trim() || country.length > 80 ||
         chosen.length < 1 || chosen.length > 3 ||
         chosen.some(s => { if (!s || !Object.prototype.hasOwnProperty.call(COURSES, s.course_id) || !Object.prototype.hasOwnProperty.call(PRICES, s.level) || seen.has(s.course_id)) return true; seen.add(s.course_id); return false; })) {
