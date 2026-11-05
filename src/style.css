@@ -360,3 +360,11 @@
 .wizard-back{border:1px solid #ddd;background:#fff;color:#555;padding:12px 14px;font:10px 'DM Mono'}
 .checkout-edit{margin:0 0 15px}
 @media(max-width:560px){.modal-backdrop{padding:12px!important;align-items:flex-start!important}.modal-backdrop .modal{width:100%!important;max-height:calc(100dvh - 24px)!important;overflow-y:auto!important;padding:22px 17px!important}.wizard-course{padding:14px 11px;gap:10px}.wizard-footer{align-items:stretch;flex-wrap:wrap}.wizard-footer>span{width:100%}.wizard-footer .primary{width:100%}.wizard-level-course{padding:12px}.wizard-level{padding:11px 9px;gap:8px}}
+
+
+/* Multi-course registration call-to-action */
+.training-chooser{display:flex;flex-direction:column;align-items:flex-start;gap:16px;max-width:430px}
+.training-chooser>p{max-width:390px;color:#999;line-height:1.9;font-size:13px;margin:0}
+.training-chooser .primary{padding:15px 20px;white-space:normal;text-align:left}
+.wizard-footer .primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+@media(max-width:800px){.training-chooser{margin-top:24px;max-width:none}.training-chooser .primary{width:100%;justify-content:center}}
