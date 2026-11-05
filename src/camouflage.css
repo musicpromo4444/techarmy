@@ -134,3 +134,128 @@ body:not(:has(.course-page)) .training-card .card-index{color:#aab58a}
 .next-plan-cue{display:none}
 @media(max-width:900px){.level-grid{grid-template-columns:1fr}.level-card p{min-height:0}.level-card{padding:25px}.course-top>span{font-size:8px;text-align:right}}
 @media(prefers-reduced-motion:reduce){.course-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+/* RED & WHITE TRAINING PLANS — camouflage stays inside the cards */
+body:has(.course-page){background:#fff!important;color:#171719}
+.course-page{
+  min-height:100vh;background:#fff!important;color:#171719;
+  padding:24px clamp(16px,5vw,72px) 64px;
+}
+.course-top{max-width:1180px;margin:0 auto 24px;color:#8d2027}
+.course-top>span{color:#8b8b8b}
+.course-back{border:1px solid #d7d7d7;background:#fff;color:#a51f29;padding:10px 14px;font:800 10px 'DM Mono';letter-spacing:1px}
+.course-explanation-card,.plan-prompt,.level-section{max-width:1180px;margin-left:auto;margin-right:auto}
+.course-explanation-card{
+  background:#fff;color:#202020;border:1px solid #e8e1e1;border-top:5px solid #b51f2b;
+  box-shadow:0 12px 35px #3810140d;padding:clamp(22px,4vw,42px);border-radius:8px;
+}
+.course-explanation-card h2{color:#171719}
+.course-explanation-card .course-summary,.course-explanation-card li{color:#5b5555}
+.course-explanation-card li svg{color:#b51f2b}
+.level-section{padding-top:28px}
+.plan-prompt{
+  background:#fff!important;border:0!important;color:#171719!important;
+  padding:clamp(22px,4vw,40px) 0 28px!important;
+}
+.plan-prompt .eyebrow,.level-duration{color:#b51f2b!important}
+.plan-prompt h2{color:#171719}
+.plan-prompt h2 em{color:#b51f2b}
+.plan-prompt p{color:#656064}
+.scroll-cue{color:#b51f2b!important}
+.level-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.level-card{
+  position:relative;isolation:isolate;overflow:hidden;min-width:0;
+  padding:28px 23px 24px!important;border:1px solid #e3c6c8!important;
+  border-top:6px solid #b51f2b!important;border-radius:9px!important;
+  color:#252124!important;background:#fff!important;
+  background-image:linear-gradient(145deg,#fff 0%,#fff 67%,#fff6f6 100%)!important;
+  box-shadow:0 12px 32px #59141a12!important;
+  display:flex;flex-direction:column;
+}
+.level-card:before{
+  content:"";position:absolute;z-index:-1;right:-35px;top:-35px;width:165px;height:155px;
+  opacity:.18;background:
+   radial-gradient(ellipse at 25% 20%,#68774b 0 18%,transparent 19%),
+   radial-gradient(ellipse at 72% 35%,#a8a27b 0 20%,transparent 21%),
+   radial-gradient(ellipse at 45% 78%,#3e5637 0 22%,transparent 23%);
+  transform:rotate(18deg);pointer-events:none;
+}
+.level-card h3{color:#171719!important;font-size:34px!important;max-width:72%;margin-top:16px!important}
+.level-card p{color:#5d5758!important;min-height:96px}
+.level-card li{color:#514b4c!important}
+.level-card li svg{color:#b51f2b!important}
+.level-price{color:#b51f2b!important;font-size:38px!important}
+.level-card .primary{
+  margin-top:auto!important;background:linear-gradient(110deg,#a71926,#e23b43)!important;
+  border:1px solid #f17a7e!important;color:#fff!important;
+  box-shadow:0 7px 18px #b51f2b30!important;
+}
+.level-card .primary:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.level-master{
+  color:#252124!important;background:#fff!important;border-color:#a91c28!important;
+  border-top-color:#75131d!important;
+  background-image:linear-gradient(145deg,#fff 0%,#fff 65%,#fff0f1 100%)!important;
+  box-shadow:0 14px 38px #8e15201c!important;
+}
+.level-master h3,.level-master p,.level-master li{color:inherit!important}
+.level-master .level-subtitle{color:#9c1b27!important}
+.level-master .level-price{color:#a71926!important}
+.level-master li svg{color:#a71926!important}
+.level-master .primary{background:linear-gradient(110deg,#76131e,#c51f2d 65%,#ed454c)!important}
+.level-subtitle{color:#a51f29!important}
+.next-plan-cue{display:none!important}
+
+/* Three illustrated commander faces: calm recruit → focused officer → strict general */
+.level-commander{
+  position:absolute;right:18px;top:22px;width:86px;height:96px;
+  display:flex;align-items:center;justify-content:center;pointer-events:none;
+  filter:drop-shadow(0 5px 5px #3b101522);
+}
+.commander-face{
+  position:absolute;top:28px;width:48px;height:51px;border-radius:43% 43% 48% 48%;
+  background:linear-gradient(110deg,#f0c9a7,#c98d70);border:2px solid #633b32;
+  box-shadow:inset -5px -3px 0 #9e6454;
+}
+.commander-helmet{
+  position:absolute;z-index:2;top:13px;width:66px;height:29px;
+  border:2px solid #303b2a;border-radius:50% 50% 12% 12%;
+  background:linear-gradient(110deg,#77885a,#34452e 70%);
+}
+.commander-helmet:after{
+  content:"";position:absolute;left:-4px;right:-4px;bottom:-5px;height:7px;
+  background:#34452e;border:1px solid #263321;border-radius:3px;
+}
+.commander-collar{
+  position:absolute;bottom:0;width:66px;height:25px;border-radius:24px 24px 5px 5px;
+  background:linear-gradient(90deg,#283a2b,#718052,#283a2b);border:2px solid #273425;
+}
+.commander-eyes{
+  position:absolute;left:9px;right:9px;top:19px;height:4px;
+  background:linear-gradient(90deg,#32251f 0 25%,transparent 25% 75%,#32251f 75%);
+}
+.commander-nose{position:absolute;left:21px;top:21px;width:5px;height:11px;border-left:1px solid #9c6654}
+.commander-mouth{position:absolute;left:15px;bottom:8px;width:17px;height:2px;background:#70443c;border-radius:4px}
+.commander-brow{position:absolute;left:7px;right:7px;top:14px;height:2px;background:#4b3028}
+.commander-1 .commander-face{border-radius:43% 43% 48% 48%}
+.commander-1 .commander-brow{transform:rotate(0deg);opacity:.55}
+.commander-1 .commander-mouth{width:18px;height:3px;border-radius:0 0 12px 12px;background:#8f5148}
+.commander-2 .commander-helmet{height:34px;background:linear-gradient(110deg,#596c43,#202e20)}
+.commander-2 .commander-brow{height:3px;transform:rotate(-5deg)}
+.commander-2 .commander-mouth{width:19px;height:2px;background:#60362f}
+.commander-3 .commander-helmet{top:7px;width:76px;height:40px;border-radius:48% 48% 8% 8%;background:linear-gradient(110deg,#8e9a69,#1f2c20 72%);border-width:3px}
+.commander-3 .commander-face{top:31px;width:50px;height:52px;background:linear-gradient(110deg,#e0b391,#a76c57);border-width:3px}
+.commander-3 .commander-brow{top:13px;height:5px;background:#34231e;transform:rotate(-9deg)}
+.commander-3 .commander-eyes{top:21px;height:5px;background:linear-gradient(90deg,#211815 0 32%,transparent 32% 68%,#211815 68%)}
+.commander-3 .commander-mouth{bottom:7px;width:23px;height:3px;background:#4a2926}
+.commander-3 .commander-collar{height:29px;background:linear-gradient(90deg,#4d171d,#b12b35,#4d171d);border-color:#5c1019}
+@media(max-width:900px){
+ .level-grid{grid-template-columns:1fr!important;gap:18px}
+ .level-card{padding:26px 22px!important;min-height:0}
+ .level-card p{min-height:0;padding-right:4px}
+ .level-commander{right:17px;top:19px;transform:scale(.9);transform-origin:top right}
+ .level-card h3{font-size:32px!important}
+ .course-page{padding:18px 12px 42px}
+ .course-top{margin-bottom:18px}
+}
+@media(max-width:420px){.level-commander{transform:scale(.78);right:12px;top:16px}.level-card{padding:23px 18px!important}.level-card h3{font-size:29px!important}}
