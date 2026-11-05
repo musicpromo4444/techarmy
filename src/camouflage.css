@@ -1,0 +1,136 @@
+/* TECH ARMY FIELD CAMOUFLAGE VISUAL SYSTEM */
+:root{
+  --field-olive:#596b3d;--field-dark:#263321;--field-moss:#87936a;
+  --field-sand:#d8d0b9;--field-paper:#f3f1e8;--field-ink:#171d17;
+}
+body:not(:has(.course-page)) .training-card,
+body:not(:has(.course-page)) .card-icon,
+body:not(:has(.course-page)) .brandmark{
+  background-color:#151a14;
+  background-image:
+    radial-gradient(ellipse at 18% 22%,#78835b55 0 13%,transparent 14%),
+    radial-gradient(ellipse at 78% 16%,#313f2c 0 17%,transparent 18%),
+    radial-gradient(ellipse at 56% 72%,#8a806355 0 14%,transparent 15%),
+    radial-gradient(ellipse at 12% 82%,#35452f 0 18%,transparent 19%),
+    linear-gradient(135deg,#161b14,#0c100d);
+  background-size:170px 140px,210px 170px,190px 150px,230px 190px,auto;
+}
+body:not(:has(.course-page)) .training-card{border-color:#66704c88}
+body:not(:has(.course-page)) .training-card.featured{
+  background-color:#171b13;
+  background-image:
+    radial-gradient(ellipse at 15% 20%,#78835b66 0 15%,transparent 16%),
+    radial-gradient(ellipse at 78% 22%,#293b27 0 19%,transparent 20%),
+    radial-gradient(ellipse at 55% 78%,#a18f6855 0 16%,transparent 17%),
+    linear-gradient(145deg,#252b1d,#111510 72%);
+  border-color:#9aa47a;
+}
+body:not(:has(.course-page)) .training-card:before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;
+  background:repeating-linear-gradient(125deg,transparent 0 19px,#d8d0b9 20px,transparent 22px 43px);
+  mask-image:linear-gradient(90deg,#000,transparent 78%);
+}
+body:not(:has(.course-page)) .card-icon{background-color:#252d20;border-color:#a4ad7c;color:#d4d9b8}
+body:not(:has(.course-page)) .card-register{
+  border-color:#c3c9a2;
+  background:linear-gradient(110deg,#35462d,#657747 48%,#8d805d);
+  box-shadow:0 0 15px #64774855,inset 0 1px #ffffff55;
+}
+body:not(:has(.course-page)) .card-register:hover{filter:brightness(1.16)}
+body:not(:has(.course-page)) .section-head .eyebrow,
+body:not(:has(.course-page)) .training-card .card-index{color:#aab58a}
+
+/* Course briefing switches to a clean field-paper and woodland-camouflage theme */
+.course-page{
+  --red:#526b3d;
+  --line:#c6c8b8;
+  position:relative;isolation:isolate;min-height:80vh;
+  padding:24px max(5vw,20px) 90px;
+  color:var(--field-ink);
+  background-color:var(--field-paper);
+  background-image:
+    radial-gradient(ellipse at 7% 15%,#75865a35 0 8%,transparent 8.5%),
+    radial-gradient(ellipse at 92% 10%,#3c563335 0 12%,transparent 12.5%),
+    radial-gradient(ellipse at 78% 62%,#9a8c6530 0 10%,transparent 10.5%),
+    radial-gradient(ellipse at 14% 78%,#405c3830 0 12%,transparent 12.5%),
+    linear-gradient(135deg,#f6f4eb,#e9ecdf);
+  background-size:390px 330px,440px 370px,370px 310px,460px 390px,auto;
+}
+.course-page:before{
+  content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.24;
+  background:repeating-linear-gradient(135deg,transparent 0 32px,#75865a 33px,transparent 35px 70px);
+  mask-image:linear-gradient(180deg,#000,transparent 75%);
+}
+.course-top{
+  max-width:1180px;margin:0 auto 28px;padding:12px 0 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-bottom:1px solid #7b876a66;color:#46543a;
+}
+.course-top>span{font:10px 'DM Mono';letter-spacing:1.5px;color:#596b48}
+.course-back{
+  border:1px solid #687b51;background:#263923;color:#f5f3e9;
+  padding:12px 17px;font:800 10px 'DM Mono';letter-spacing:1px;
+  box-shadow:4px 4px 0 #a5aa8a;
+}
+.course-back:hover{background:#526b3d;transform:translateY(-2px)}
+.course-explanation-card{
+  max-width:1180px;margin:0 auto 30px;padding:clamp(25px,5vw,58px);
+  color:#f5f3e9;border:1px solid #78865f;
+  background-color:#263523;
+  background-image:
+    radial-gradient(ellipse at 12% 20%,#7d8a5a 0 10%,transparent 10.5%),
+    radial-gradient(ellipse at 82% 18%,#3b5034 0 15%,transparent 15.5%),
+    radial-gradient(ellipse at 57% 90%,#8b8060 0 13%,transparent 13.5%),
+    linear-gradient(120deg,#1e2a1e,#35452d 58%,#202b1e);
+  box-shadow:0 18px 45px #26332122,inset 0 0 0 5px #ffffff0a;
+}
+.course-explanation-card .eyebrow{color:#d6dcb8}
+.course-explanation-card h2{color:#fff;font-size:clamp(42px,6vw,72px);margin:18px 0}
+.course-explanation-card .course-summary{max-width:800px;color:#e0e4d5;font-size:15px;line-height:1.9}
+.course-explanation-card ul,.level-card ul{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:13px}
+.course-explanation-card li{display:flex;align-items:flex-start;gap:12px;color:#f1f0e6;font-size:13px;line-height:1.65}
+.course-explanation-card li svg{color:#d5dda9;flex-shrink:0;margin-top:2px}
+.level-section{
+  max-width:1180px;margin:0 auto;padding:clamp(25px,4vw,48px);
+  border:1px solid #c5c9b7;background:#fbfaf4eF;
+  box-shadow:0 16px 45px #27321c15;
+}
+.level-section .eyebrow{color:#586e40}
+.level-section h2{color:#1d281d;font-size:clamp(40px,6vw,68px)}
+.level-section h2 em{color:#607847}
+.level-section .plan-prompt p{color:#586052;max-width:560px;line-height:1.8;font-size:13px}
+.scroll-cue{display:inline-flex;align-items:center;gap:10px;color:#536940;font:10px 'DM Mono';letter-spacing:1.4px}
+.scroll-cue svg{transform:rotate(90deg)}
+.level-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:35px}
+.level-card{
+  min-width:0;padding:25px 22px;border:1px solid #aeb69b;border-radius:5px;
+  color:#20271d;background:#f2f1e7;
+  background-image:radial-gradient(ellipse at 90% 10%,#8c9a7130 0 15%,transparent 15.5%),radial-gradient(ellipse at 5% 85%,#a79a7430 0 17%,transparent 17.5%);
+  box-shadow:0 8px 22px #27321c12;
+}
+.level-card.level-master{
+  color:#f5f3e9;border-color:#34482e;
+  background-color:#293b2a;
+  background-image:radial-gradient(ellipse at 85% 10%,#84915a 0 14%,transparent 14.5%),radial-gradient(ellipse at 8% 82%,#8b8060 0 16%,transparent 16.5%),linear-gradient(145deg,#273b29,#1b281c);
+}
+.level-duration{font:10px 'DM Mono';letter-spacing:1.5px;color:#68794d}
+.level-master .level-duration,.level-master .level-subtitle{color:#d2d9b6}
+.level-card h3{font:900 31px 'Barlow Condensed';margin:14px 0 5px;color:#273421}
+.level-master h3{color:#fff}
+.level-subtitle{font-size:11px;color:#536b3d}
+.level-card p{min-height:88px;margin:16px 0;color:#586052;font-size:12px;line-height:1.75}
+.level-master p{color:#e0e5d6}
+.level-price{font:900 34px 'Barlow Condensed';color:#425c34;margin:18px 0}
+.level-master .level-price{color:#e1e8bd}
+.level-card li{display:flex;align-items:flex-start;gap:9px;color:#4b5544;font-size:11px;line-height:1.6}
+.level-master li{color:#edf0e4}
+.level-card li svg{color:#617b43;flex-shrink:0;margin-top:1px}
+.level-master li svg{color:#d2dda4}
+.level-card .primary{
+  background:linear-gradient(110deg,#35482f,#61794a);
+  color:#fff;border:1px solid #9da982;box-shadow:0 5px 15px #526b3d35;
+}
+.level-master .primary{background:linear-gradient(110deg,#8b805d,#687b48);color:#fff}
+.next-plan-cue{display:none}
+@media(max-width:900px){.level-grid{grid-template-columns:1fr}.level-card p{min-height:0}.level-card{padding:25px}.course-top>span{font-size:8px;text-align:right}}
+@media(prefers-reduced-motion:reduce){.course-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
