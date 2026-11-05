@@ -19,7 +19,8 @@ const LEVELS=[
 const money=n=>"₦"+Number(n||0).toLocaleString("en-NG");
 function App(){
 const[menu,setMenu]=useState(false),[courseId,setCourseId]=useState(null),[levelId,setLevelId]=useState(null),[modal,setModal]=useState(false),[sent,setSent]=useState(false),[tab,setTab]=useState("All"),[form,setForm]=useState({name:"",phone:"",email:"",country:"Nigeria",countryCode:"NG"}),[mode,setMode]=useState("pay"),[busy,setBusy]=useState(false),[error,setError]=useState(""),[paymentInfo,setPaymentInfo]=useState(null),[selections,setSelections]=useState([]),[addCourseId,setAddCourseId]=useState("automation"),[addLevelId,setAddLevelId]=useState("Starter"),[manualPayment,setManualPayment]=useState(null),[manualNow,setManualNow]=useState(Date.now()),[enquirySaved,setEnquirySaved]=useState(false);
-const course=COURSES.find(c=>c.id===courseId),level=LEVELS.find(l=>l.id===levelId);\nconst totalPrice=selections.reduce((sum,s)=>sum+(LEVELS.find(l=>l.id===s.level)?.price||0),0);
+const course=COURSES.find(c=>c.id===courseId),level=LEVELS.find(l=>l.id===levelId);
+const totalPrice=selections.reduce((sum,s)=>sum+(LEVELS.find(l=>l.id===s.level)?.price||0),0);
 const openCourse=id=>{setCourseId(id);setLevelId(null);setMenu(false);window.scrollTo({top:0,behavior:"smooth"})};
 const openCheckout=id=>{setLevelId(id);setSelections([{course_id:courseId,level:id}]);setAddCourseId(COURSES.find(x=>x.id!==courseId)?.id||"web");setAddLevelId(id);setForm(f=>({...f}));setMode("pay");setError("");setEnquirySaved(false);setSent(false);setModal(true)};
 const resetHome=()=>{setCourseId(null);setLevelId(null);setModal(false);setSent(false);window.scrollTo({top:0,behavior:"smooth"})};
