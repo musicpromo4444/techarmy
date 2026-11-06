@@ -1,5 +1,4 @@
 import React,{useCallback,useMemo,useState}from"react";
-import{createRoot}from"react-dom/client";
 import{Activity,BookOpen,Users,Wallet,MessageSquare,Settings,Globe,Clapperboard,RefreshCw,LogOut,ShieldCheck,Save,Copy,CheckCircle,XCircle,ExternalLink,Menu,LayoutDashboard,AlertCircle}from"lucide-react";
 import"./admin.css";
 const SOCIAL=[["youtube_url","YouTube","Subscribe"],["facebook_url","Facebook","Follow"],["instagram_url","Instagram","Follow"],["tiktok_url","TikTok","Follow"],["linkedin_url","LinkedIn","Connect"],["pinterest_url","Pinterest","Follow"],["whatsapp_community_url","WhatsApp Community","Join"]];
@@ -32,4 +31,4 @@ function Admin(){
  {tab==="social"&&<><div className="ta-page-intro"><div><span className="ta-eyebrow">GROW THE COMMUNITY</span><h3>Social media connections</h3><p>Manage the links behind the website's follow, subscribe, connect and join buttons.</p></div></div><section className="ta-panel ta-social-panel"><div className="ta-social-grid">{SOCIAL.map(([field,name,action])=><label key={field}><span><Globe size={17}/><b>{name}</b><small>{action.toUpperCase()}</small></span><input type="url" value={settings[field]||""} onChange={e=>changeSetting(field,e.target.value)} placeholder="https://…"/></label>)}</div><p className="ta-help">Use public profile or community invitation URLs. Leave a field empty to hide that platform's button.</p></section><button className="ta-primary ta-save" onClick={saveSettings} disabled={busy}><Save size={16}/> SAVE SOCIAL LINKS</button></>}
  <footer className="ta-footer">TECH ARMY · ADMIN COMMAND CENTRE <span>CONTROL YOUR ACADEMY. BUILD YOUR FUTURE.</span></footer></section></main>;
 }
-createRoot(document.getElementById("admin-root")||document.getElementById("root")).render(<Admin/>);
+export default Admin;
