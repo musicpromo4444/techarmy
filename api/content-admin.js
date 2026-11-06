@@ -1,19 +1,23 @@
 const CATEGORIES=["AI Movies & Dramas","Websites & Apps","AI Graphics & Images","Videos & Animations"];
 const TYPES=["video","website","image"];
-function authorized(req){const token=String(req.headers.authorization||"").replace(/^Bearer\s+/i,"");return Boolean(process.env.ADMIN_API_KEY&&token&&token===(process.env.CONTENT_ADMIN_KEY||process.env.ADMIN_API_KEY));}
+function authorized(req){
+ const token=String(req.headers.authorization||"").replace(/^Bearer\\s+/i,"");
+ const expected=process.env.CONTENT_ADMIN_KEY||process.env.ADMIN_API_KEY;
+ return Boolean(expected&&token&&token===expected);
+}
 function validUrl(v){try{return new URL(v).protocol==="https:";}catch{return false;}}
 export default async function handler(req,res){
  if(!authorized(req))return res.status(401).json({error:"Admin access required."});
  const url=process.env.SUPABASE_URL,key=process.env.SUPABASE_SERVICE_ROLE_KEY;
  if(!url||!key)return res.status(503).json({error:"Database is not configured."});
- const base=url.replace(/\/$/,""),headers={apikey:key,Authorization:"Bearer "+key};
+ const base=url.replace(/\\/$/,""),headers={apikey:key,Authorization:"Bearer "+key};
  try{
   if(req.method==="GET"){const r=await fetch(base+"/rest/v1/tech_army_showcase?select=*&order=sort_order.asc,created_at.desc",{headers});const rows=await r.json();if(!r.ok)return res.status(502).json({error:"Could not load projects."});return res.status(200).json({projects:rows});}
   if(req.method==="POST"){
    const b=req.body||{};
    if(b.action==="upload"){
-    if(!/^image\/(jpeg|png|webp)$/.test(b.mime_type||"")||typeof b.image_base64!=="string")return res.status(400).json({error:"Choose a JPG, PNG or WebP image."});
-    const raw=b.image_base64.replace(/^data:image\/(jpeg|png|webp);base64,/,"");
+    if(!/^image\\/(jpeg|png|webp)$/.test(b.mime_type||"")||typeof b.image_base64!=="string")return res.status(400).json({error:"Choose a JPG, PNG or WebP image."});
+    const raw=b.image_base64.replace(/^data:image\\/(jpeg|png|webp);base64,/,"");
     const bytes=Buffer.from(raw,"base64");if(!bytes.length||bytes.length>3*1024*1024)return res.status(400).json({error:"Image must be smaller than 3 MB."});
     const ext={"image/jpeg":"jpg","image/png":"png","image/webp":"webp"}[b.mime_type],name=Date.now()+"-"+Math.random().toString(36).slice(2,9)+"."+ext;
     const up=await fetch(base+"/storage/v1/object/tech-army-showcase/"+name,{method:"POST",headers:{...headers,"Content-Type":b.mime_type,"x-upsert":"false"},body:bytes});
