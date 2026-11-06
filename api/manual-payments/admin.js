@@ -1,5 +1,6 @@
 const STATUSES = new Set(["approved", "rejected"]);
 const GROUP_KEYS = ["web_starter_group_url","web_professional_group_url","web_master_group_url","automation_starter_group_url","automation_professional_group_url","automation_master_group_url","creative_starter_group_url","creative_professional_group_url","creative_master_group_url"];
+const SOCIAL_KEYS = ["youtube_url","facebook_url","instagram_url","tiktok_url","linkedin_url","pinterest_url","whatsapp_community_url"];
 function authorized(req) {
   const token = String(req.headers.authorization || "").replace(/^Bearer\s+/i, "");
   return Boolean(process.env.ADMIN_API_KEY && token && token === process.env.ADMIN_API_KEY);
@@ -53,6 +54,7 @@ export default async function handler(req, res) {
       for (const k of GROUP_KEYS) if (b[k] && (typeof b[k] !== "string" || !/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9_-]+/i.test(b[k]))) return res.status(400).json({ error: "Enter valid WhatsApp group invite links." });
       const payload = { id: "default", bank_name: b.bank_name.trim(), account_name: b.account_name.trim(), account_number: b.account_number.replace(/\s/g, ""), admin_whatsapp: b.admin_whatsapp.replace(/\D/g, ""), updated_at: new Date().toISOString() };
       for (const k of GROUP_KEYS) payload[k] = b[k] || null;
+      for (const k of SOCIAL_KEYS) { if (b[k] && (typeof b[k] !== "string" || !/^https:\/\//i.test(b[k]))) return res.status(400).json({ error: "Social links must use HTTPS URLs." }); payload[k] = b[k] || null; }
       const r = await fetch(base + "/rest/v1/tech_army_payment_settings?on_conflict=id", { method: "POST", headers: { ...headers, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=representation" }, body: JSON.stringify(payload) });
       const rows = await r.json();
       if (!r.ok) return res.status(502).json({ error: "Could not save payment settings." });
