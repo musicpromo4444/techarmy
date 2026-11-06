@@ -368,3 +368,21 @@
 .training-chooser .primary{padding:15px 20px;white-space:normal;text-align:left}
 .wizard-footer .primary:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
 @media(max-width:800px){.training-chooser{margin-top:24px;max-width:none}.training-chooser .primary{width:100%;justify-content:center}}
+
+
+/* Official social channels — clear follow and connect actions */
+.social-connect{position:relative;overflow:hidden;padding:clamp(52px,8vw,88px) 24px;background:linear-gradient(135deg,#171014,#0b0c10 58%,#1b1012);border-top:1px solid #5c292b;border-bottom:1px solid #5c292b}
+.social-connect:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,#a9273022,transparent 65%);pointer-events:none}
+.social-connect-inner{position:relative;max-width:1120px;margin:auto;text-align:center}
+.social-connect .eyebrow{justify-content:center}
+.social-connect h2{font:900 clamp(38px,6vw,66px) 'Barlow Condensed';letter-spacing:-1px;margin:14px 0 8px;color:#fff}
+.social-connect h2 em{color:#ff5b50;font-style:normal}
+.social-connect-inner>p{max-width:600px;margin:0 auto 30px;color:#aaa;font-size:13px;line-height:1.8}
+.social-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;text-align:left}
+.social-links>a{min-width:0;display:flex;align-items:center;gap:11px;padding:15px 14px;background:#ffffff08;border:1px solid #ffffff20;color:#f5f2f0;text-decoration:none;transition:transform .2s,border-color .2s,background .2s}
+.social-links>a:hover{transform:translateY(-3px);border-color:#ff6258;background:#ff51470e}
+.social-links>a>b{font:700 13px 'DM Mono';letter-spacing:.2px;flex:1}
+.social-links>a>svg{color:#ff7168;flex:0 0 auto}
+.social-mark{width:31px;height:31px;display:grid;place-items:center;flex:0 0 31px;border:1px solid #9c4848;border-radius:8px;color:#ff8279;font:800 16px Arial,sans-serif}
+@media(max-width:760px){.social-links{grid-template-columns:repeat(2,minmax(0,1fr))}.social-links>a{padding:13px 11px}}
+@media(max-width:380px){.social-links{grid-template-columns:1fr}}
